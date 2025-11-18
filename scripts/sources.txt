@@ -1,0 +1,7 @@
+src/businessLogic/BLFactory.java
+src/dataAccess/DAO/PacienteDAO.java
+src/dataAccess/DTO/PacienteDTO.java
+src/dataAccess/IDAO.java
+src/dataAccess/MySQLDataHelper.java
+src/framework/ExceptionLogger.java
+src/Main.java

@@ -1,0 +1,8 @@
+Compilar (BASH):
+rm -rf build/
+mkdir build
+find src -name "*.java" > scripts/sources.txt
+javac -cp "lib/mysql-connector-j-9.5.0.jar" -d build @scripts/sources.txt
+
+Ejecutar (BASH):
+java -cp "$(pwd)/build:$(pwd)/lib/mysql-connector-j-9.5.0.jar" Main
