@@ -1,0 +1,9 @@
+.boton{
+    -fx-background-color: blue;
+}
+
+.fondo{
+    -fx-background-image: url(../resources/fondo.jpg);
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
