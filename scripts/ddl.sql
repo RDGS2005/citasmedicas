@@ -10,7 +10,7 @@
 create table CITA
 (
    ID_CITA              int not null auto_increment,
-   ID_TURNO             int,
+   ID_TURNO             int CHECK ( value > 0),
    REFRENCIA            int,
    CONTRARREFERENCIA    int,
    ID_PACIENTE          int,
@@ -113,6 +113,8 @@ create table MEDICAMENTO
 create table MEDICO
 (
    ID_MEDICO            int not null auto_increment,
+   CEDULA               char(10) not null,
+   PASSWORD             char(256) not null,
    ID_ESPECIALIZACION   int,
    NOMBRES              varchar(64) not null,
    APELLIDOS            varchar(64) not null,
@@ -130,6 +132,7 @@ create table PACIENTE
 (
    ID_PACIENTE          int not null auto_increment,
    CEDULA               char(10) not null,
+   PASSWORD             CHAR(256) NOT NULL,
    NOMBRES              varchar(64) not null,
    APELLIDOS            varchar(64) not null,
    SEXO                 char(16) not null,
@@ -174,6 +177,17 @@ create table TURNO
    ID_MEDICO            int,
    primary key (ID_TURNO)
 );
+
+create table OPERADOR(
+     ID_OPERADOR          int not null auto_increment,
+     CEDULA               char(10) not null,
+     PASSWORD             char(256) not null,
+     NOMBRES              varchar(64) not null,
+     APELLIDOS            varchar(64) not null,
+     TELEFONO             char(10),
+     CORREO               varchar(128) not null,
+     primary key (ID_OPERADOR)
+)
 
 alter table CITA add constraint FK_CITA_ASISTE_PACIENTE foreign key (ID_PACIENTE)
       references PACIENTE (ID_PACIENTE) on delete restrict on update restrict;

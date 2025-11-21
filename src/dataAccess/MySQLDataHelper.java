@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public abstract class MySQLDataHelper{
-    private static final String URL = "jdbc:mysql://localhost:3306/mydb";
+    private static final String URL = "jdbc:mysql://localhost:3306/citasmedicas";
     private static final String USER = "root";
     private static final String PSWD = "";
     private static Connection conn = null;
