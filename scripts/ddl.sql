@@ -1,23 +1,16 @@
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     17/11/2025 15:26:53                          */
-/*==============================================================*/
-
-
-/*==============================================================*/
 /* Table: CITA                                                  */
 /*==============================================================*/
 create table CITA
 (
-   ID_CITA              int not null auto_increment,
-   ID_TURNO             int CHECK ( value > 0),
-   REFRENCIA            int,
-   CONTRARREFERENCIA    int,
-   ID_PACIENTE          int,
-   ASISTE_MEDICO        bool not null,
-   ASISTE_PACIENTE      bool not null,
-   RECOMENDACIONES      varchar(256),
-   primary key (ID_CITA)
+    ID_CITA              int not null auto_increment,
+    ID_TURNO             int not null CHECK (ID_TURNO > 0),
+    REFERENCIA           int CHECK (REFERENCIA > 0),
+    CONTRARREFERENCIA    int CHECK (CONTRARREFERENCIA > 0),
+    ID_PACIENTE          int not null CHECK (ID_PACIENTE > 0),
+    ASISTE_MEDICO        bool not null,
+    ASISTE_PACIENTE      bool not null,
+    primary key (ID_CITA)
 );
 
 /*==============================================================*/
@@ -25,12 +18,13 @@ create table CITA
 /*==============================================================*/
 create table DIAGNOSTICO
 (
-   ID_DIAGNOSTICO       int not null auto_increment,
-   ID_CITA              int,
-   CONDICION            varchar(128) not null,
-   CERTEZA              varchar(16) not null,
-   SINTOMAS_IDENTIFICADOS varchar(256) not null,
-   primary key (ID_DIAGNOSTICO)
+    ID_DIAGNOSTICO             int not null auto_increment,
+    ID_CITA                    int not null CHECK (ID_CITA > 0),
+    SINTOMAS_IDENTIFICADOS     varchar(256) not null,
+    CONDICION                  varchar(128) not null,
+    CERTEZA                    varchar(16) not null CHECK(CERTEZA in ('DEFINITIVO', 'PROBABLE', 'TENTATIVO', 'INCIERTO', 'DIFERENCIAL')),
+    TRATAMIENTO                varchar(256),
+    primary key (ID_DIAGNOSTICO)
 );
 
 /*==============================================================*/
@@ -38,21 +32,9 @@ create table DIAGNOSTICO
 /*==============================================================*/
 create table ESPECIALIZACION
 (
-   ID_ESPECIALIZACION   int not null auto_increment,
-   NUMERO               int not null,
-   primary key (ID_ESPECIALIZACION)
-);
-
-/*==============================================================*/
-/* Table: EXAMEN                                                */
-/*==============================================================*/
-create table EXAMEN
-(
-   ID_EXAMEN            int not null auto_increment,
-   ID_CITA              int,
-   ID_LABORATORIO       int,
-   RESULTADOS           varchar(256) not null,
-   primary key (ID_EXAMEN)
+    ID_ESPECIALIZACION   int not null auto_increment,
+    DESCRIPCION          varchar(32) not null,
+    primary key (ID_ESPECIALIZACION)
 );
 
 /*==============================================================*/
@@ -60,9 +42,9 @@ create table EXAMEN
 /*==============================================================*/
 create table FECHA
 (
-   ID_FECHA             int not null auto_increment,
-   FECHA                date not null,
-   primary key (ID_FECHA)
+    ID_FECHA             int not null auto_increment,
+    FECHA                date not null,
+    primary key (ID_FECHA)
 );
 
 /*==============================================================*/
@@ -70,9 +52,9 @@ create table FECHA
 /*==============================================================*/
 create table GRUPO_PRIORITARIO
 (
-   ID_GRUPO             int not null auto_increment,
-   DESCRIPCION          varchar(32) not null,
-   primary key (ID_GRUPO)
+    ID_GRUPO             int not null auto_increment,
+    DESCRIPCION          varchar(32) not null,
+    primary key (ID_GRUPO)
 );
 
 /*==============================================================*/
@@ -80,20 +62,9 @@ create table GRUPO_PRIORITARIO
 /*==============================================================*/
 create table HORARIO
 (
-   ID_HORARIO           int not null auto_increment,
-   HORA_INICIO          time not null,
-   primary key (ID_HORARIO)
-);
-
-/*==============================================================*/
-/* Table: LABORATIO                                             */
-/*==============================================================*/
-create table LABORATIO
-(
-   ID_LABORATORIO       int not null auto_increment,
-   NUMERO               int not null,
-   DEPARTAMENTO         varchar(64) not null,
-   primary key (ID_LABORATORIO)
+    ID_HORARIO           int not null auto_increment,
+    HORA_INICIO          time not null,
+    primary key (ID_HORARIO)
 );
 
 /*==============================================================*/
@@ -101,10 +72,10 @@ create table LABORATIO
 /*==============================================================*/
 create table MEDICAMENTO
 (
-   ID_MEDICAMENTO       int not null auto_increment,
-   NUMERO               int not null,
-   PRINCIPIO_ACTIVO     varchar(64) not null,
-   primary key (ID_MEDICAMENTO)
+    ID_MEDICAMENTO       int not null auto_increment,
+    DESCRIPCION          varchar(32) not null,
+    PRINCIPIO_ACTIVO     varchar(64) not null,
+    primary key (ID_MEDICAMENTO)
 );
 
 /*==============================================================*/
@@ -112,17 +83,17 @@ create table MEDICAMENTO
 /*==============================================================*/
 create table MEDICO
 (
-   ID_MEDICO            int not null auto_increment,
-   CEDULA               char(10) not null,
-   PASSWORD             char(256) not null,
-   ID_ESPECIALIZACION   int,
-   NOMBRES              varchar(64) not null,
-   APELLIDOS            varchar(64) not null,
-   SEXO                 char(16),
-   FECHA_NACIMIENTO     date,
-   JORNADA_INICIO       time not null,
-   JORNADA_FIN          time not null,
-   primary key (ID_MEDICO)
+    ID_MEDICO            int not null auto_increment,
+    CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
+    PASSWORD             char(66) not null,
+    ID_ESPECIALIZACION   int not null CHECK(ID_ESPECIALIZACION > 0),
+    NOMBRES              varchar(64) not null,
+    APELLIDOS            varchar(64) not null,
+    SEXO                 char(16),
+    FECHA_NACIMIENTO     date,
+    JORNADA_INICIO       time not null,
+    JORNADA_FIN          time not null,
+    primary key (ID_MEDICO)
 );
 
 /*==============================================================*/
@@ -130,19 +101,19 @@ create table MEDICO
 /*==============================================================*/
 create table PACIENTE
 (
-   ID_PACIENTE          int not null auto_increment,
-   CEDULA               char(10) not null,
-   PASSWORD             CHAR(256) NOT NULL,
-   NOMBRES              varchar(64) not null,
-   APELLIDOS            varchar(64) not null,
-   SEXO                 char(16) not null,
-   FECHA_NACIMIENTO     date not null,
-   DIRECCION            varchar(128),
-   NACIONALIDAD         varchar(128),
-   TELEFONO             char(10),
-   CORREO               varchar(128) not null,
-   AFILIACION           char(16) not null,
-   primary key (ID_PACIENTE)
+    ID_PACIENTE          int not null auto_increment,
+    CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
+    PASSWORD             char(66) not null,
+    NOMBRES              varchar(64) not null,
+    APELLIDOS            varchar(64) not null,
+    SEXO                 char(16) not null,
+    FECHA_NACIMIENTO     date not null,
+    DIRECCION            varchar(128),
+    NACIONALIDAD         varchar(128),
+    TELEFONO             char(10) CHECK(TELEFONO REGEXP '^[0-9]{10}$'),
+    CORREO               varchar(128) not null CHECK (CORREO REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
+    AFILIACION           char(16) not null CHECK (AFILIACION IN ('NO APORTA', 'SEGURO GENERAL', 'SEGURO VOLUNTARIO', 'SEGURO CAMPESINO')),
+    primary key (ID_PACIENTE)
 );
 
 /*==============================================================*/
@@ -150,9 +121,9 @@ create table PACIENTE
 /*==============================================================*/
 create table PERTENECE
 (
-   ID_PACIENTE          int not null,
-   ID_GRUPO             int not null,
-   primary key (ID_PACIENTE, ID_GRUPO)
+    ID_PACIENTE          int not null CHECK(ID_PACIENTE > 0),
+    ID_GRUPO             int not null CHECK(ID_GRUPO > 0),
+    primary key (ID_PACIENTE, ID_GRUPO)
 );
 
 /*==============================================================*/
@@ -160,9 +131,9 @@ create table PERTENECE
 /*==============================================================*/
 create table RECETA
 (
-   ID_CITA              int not null,
-   ID_MEDICAMENTO       int not null,
-   primary key (ID_CITA, ID_MEDICAMENTO)
+    ID_DIAGNOSTICO       int not null CHECK(ID_DIAGNOSTICO > 0),
+    ID_MEDICAMENTO       int not null CHECK(ID_MEDICAMENTO > 0),
+    primary key (ID_DIAGNOSTICO, ID_MEDICAMENTO)
 );
 
 /*==============================================================*/
@@ -170,70 +141,63 @@ create table RECETA
 /*==============================================================*/
 create table TURNO
 (
-   ID_TURNO             int not null auto_increment,
-   ID_CITA              int,
-   ID_FECHA             int,
-   ID_HORARIO           int,
-   ID_MEDICO            int,
-   primary key (ID_TURNO)
+    ID_TURNO             int not null auto_increment,
+    ID_CITA              int CHECK(ID_CITA > 0),
+    ID_FECHA             int not null CHECK(ID_FECHA > 0),
+    ID_HORARIO           int not null CHECK(ID_HORARIO > 0),
+    ID_MEDICO            int not null CHECK(ID_MEDICO > 0),
+    primary key (ID_TURNO)
 );
 
 create table OPERADOR(
-     ID_OPERADOR          int not null auto_increment,
-     CEDULA               char(10) not null,
-     PASSWORD             char(256) not null,
+                         ID_OPERADOR          int not null auto_increment,
+                         CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
+     PASSWORD             char(66) not null,
      NOMBRES              varchar(64) not null,
      APELLIDOS            varchar(64) not null,
-     TELEFONO             char(10),
-     CORREO               varchar(128) not null,
+     TELEFONO             char(10) CHECK(TELEFONO REGEXP '^[0-9]{10}$'),
+     CORREO               varchar(128) not null CHECK (CORREO REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
      primary key (ID_OPERADOR)
-)
+);
 
 alter table CITA add constraint FK_CITA_ASISTE_PACIENTE foreign key (ID_PACIENTE)
-      references PACIENTE (ID_PACIENTE) on delete restrict on update restrict;
+    references PACIENTE (ID_PACIENTE) on delete no action on update no action;
 
 alter table CITA add constraint FK_CITA_CONTRARRE_CITA foreign key (CONTRARREFERENCIA)
-      references CITA (ID_CITA) on delete restrict on update restrict;
+    references CITA (ID_CITA) on delete no action on update no action;
 
-alter table CITA add constraint FK_CITA_REFERENCI_CITA foreign key (REFRENCIA)
-      references CITA (ID_CITA) on delete restrict on update restrict;
+alter table CITA add constraint FK_CITA_REFERENCI_CITA foreign key (REFERENCIA)
+    references CITA (ID_CITA) on delete no action on update no action;
 
 alter table CITA add constraint FK_CITA_TURNO_CIT_TURNO foreign key (ID_TURNO)
-      references TURNO (ID_TURNO) on delete restrict on update restrict;
+    references TURNO (ID_TURNO) on delete no action on update no action;
 
 alter table DIAGNOSTICO add constraint FK_DIAGNOST_DETERMINA_CITA foreign key (ID_CITA)
-      references CITA (ID_CITA) on delete restrict on update restrict;
+    references CITA (ID_CITA) on delete no action on update no action;
 
-alter table EXAMEN add constraint FK_EXAMEN_MANDA_CITA foreign key (ID_CITA)
-      references CITA (ID_CITA) on delete restrict on update restrict;
-
-alter table EXAMEN add constraint FK_EXAMEN_REALIZA_LABORATI foreign key (ID_LABORATORIO)
-      references LABORATIO (ID_LABORATORIO) on delete restrict on update restrict;
-
-alter table MEDICO add constraint FK_MEDICO_MEDICO_ES_ESPECIAL foreign key (ID_ESPECIALIZACION)
-      references ESPECIALIZACION (ID_ESPECIALIZACION) on delete restrict on update restrict;
+alter table MEDICO add constraint FK_MEDICO_MEDICO_ESPECIALI foreign key (ID_ESPECIALIZACION)
+    references ESPECIALIZACION (ID_ESPECIALIZACION) on delete no action on update no action;
 
 alter table PERTENECE add constraint FK_PERTENEC_PERTENECE_PACIENTE foreign key (ID_PACIENTE)
-      references PACIENTE (ID_PACIENTE) on delete restrict on update restrict;
+    references PACIENTE (ID_PACIENTE) on delete no action on update no action;
 
 alter table PERTENECE add constraint FK_PERTENEC_PERTENECE_GRUPO_PR foreign key (ID_GRUPO)
-      references GRUPO_PRIORITARIO (ID_GRUPO) on delete restrict on update restrict;
+    references GRUPO_PRIORITARIO (ID_GRUPO) on delete no action on update no action;
 
-alter table RECETA add constraint FK_RECETA_RECETA_CITA foreign key (ID_CITA)
-      references CITA (ID_CITA) on delete restrict on update restrict;
+alter table RECETA add constraint FK_RECETA_RECETA_CITA foreign key (ID_DIAGNOSTICO)
+    references DIAGNOSTICO (ID_DIAGNOSTICO) on delete no action on update no action;
 
 alter table RECETA add constraint FK_RECETA_RECETA2_MEDICAME foreign key (ID_MEDICAMENTO)
-      references MEDICAMENTO (ID_MEDICAMENTO) on delete restrict on update restrict;
+    references MEDICAMENTO (ID_MEDICAMENTO) on delete no action on update no action;
 
 alter table TURNO add constraint FK_TURNO_ATIENDE_MEDICO foreign key (ID_MEDICO)
-      references MEDICO (ID_MEDICO) on delete restrict on update restrict;
+    references MEDICO (ID_MEDICO) on delete no action on update no action;
 
-alter table TURNO add constraint FK_TURNO_TURNO_CIT_CITA foreign key (ID_CITA)
-      references CITA (ID_CITA) on delete restrict on update restrict;
+alter table TURNO add constraint FK_TURNO_TURNO_CITA foreign key (ID_CITA)
+    references CITA (ID_CITA) on delete no action on update no action;
 
-alter table TURNO add constraint FK_TURNO_TURNO_FEC_FECHA foreign key (ID_FECHA)
-      references FECHA (ID_FECHA) on delete restrict on update restrict;
+alter table TURNO add constraint FK_TURNO_TURNO_FECHA foreign key (ID_FECHA)
+    references FECHA (ID_FECHA) on delete no action on update no action;
 
-alter table TURNO add constraint FK_TURNO_TURNO_HOR_HORARIO foreign key (ID_HORARIO)
-      references HORARIO (ID_HORARIO) on delete restrict on update restrict;
-
+alter table TURNO add constraint FK_TURNO_TURNO_HORARIO foreign key (ID_HORARIO)
+    references HORARIO (ID_HORARIO) on delete no action on update no action;
