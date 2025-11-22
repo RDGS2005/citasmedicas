@@ -1,9 +1,22 @@
 .boton{
-    -fx-background-color: blue;
-}
+    -fx-background-color: #f5e1ce;
+    -fx-font-weight: bold;
 
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+.cajaBlanca{
+
+    -fx-background-color: white;
+}
 .fondo{
     -fx-background-image: url(../resources/fondo.jpg);
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+.imagenPersona{
+    -fx-background-image: url(../resources/loginImagen.png);
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
 }

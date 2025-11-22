@@ -15,7 +15,7 @@ public class AppIess extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/appointmentsApp/fxml/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/appointmentsApp/fxml/loginPage.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
