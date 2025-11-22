@@ -1,5 +1,8 @@
 package dataAccess.DAO;
 
+import dataAccess.DTO.CitaDTO;
+import dataAccess.DTO.DiagnosticoDTO;
+import dataAccess.DTO.MedicoDTO;
 import dataAccess.DTO.PacienteDTO;
 import dataAccess.IDAO;
 import dataAccess.MySQLDataHelper;
@@ -13,6 +16,17 @@ import java.util.List;
 
 public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
 
+    public PacienteDTO login(String cedula, String password) throws Exception{
+        PacienteDTO dto = new PacienteDTO();
+        return dto;
+    }
+    public boolean registrar(PacienteDTO entity, String password) throws Exception
+    {
+        try{
+            create(entity);
+        }catch(Exception e) {}
+        return true;
+    }
     @Override
     public PacienteDTO readBy(Integer id) throws Exception {
         PacienteDTO dto = new PacienteDTO();
@@ -46,6 +60,7 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
                                         ,rs.getString(9)
                                         ,rs.getString(10)
                                         ,rs.getString(11)
+                                        ,null
                 );
             }
         } 
@@ -54,7 +69,7 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
         }
         return dto;
     }
-
+    //VER TODOS LOS PACIENTES
     @Override
     public List<PacienteDTO> readAll() throws Exception {
         PacienteDTO dto;
@@ -88,6 +103,7 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
                                         ,rs.getString(9)
                                         ,rs.getString(10)
                                         ,rs.getString(11)
+                                        ,null
                 );
                 lst.add(dto);
             }
@@ -97,19 +113,28 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
         }
         return lst;
     }
-
+    //REGISTRAR PERFIL
     @Override
     public boolean create(PacienteDTO entity) throws Exception {
         return true;
     }
-
+    //MODIFICAR PERFIL
     @Override
     public boolean update(PacienteDTO entity) throws Exception {
         return true;
     }
-
-    @Override
-    public boolean delete(Integer id) throws Exception {
+    //ELIMINAR PERFIL
+    public boolean dardebaja(Integer id_paciente) throws Exception{
         return true;
+    }
+    //RECUPERAR PERFIL
+    public boolean dardealta(Integer id_paciente) throws Exception{
+        return true;
+    }
+    //CONSULTAR ELIMINADOS PARA RECUPERARLOS
+    public List<PacienteDTO> verEliminados() throws Exception {
+        PacienteDTO dto;
+        List<PacienteDTO> lst = new ArrayList<>();
+        return lst;
     }
 }

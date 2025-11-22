@@ -8,8 +8,7 @@ create table CITA
     REFERENCIA           int CHECK (REFERENCIA > 0),
     CONTRARREFERENCIA    int CHECK (CONTRARREFERENCIA > 0),
     ID_PACIENTE          int not null CHECK (ID_PACIENTE > 0),
-    ASISTE_MEDICO        bool not null,
-    ASISTE_PACIENTE      bool not null,
+    CANCELADA            bool not null DEFAULT(false),
     primary key (ID_CITA)
 );
 
@@ -93,6 +92,7 @@ create table MEDICO
     FECHA_NACIMIENTO     date,
     JORNADA_INICIO       time not null,
     JORNADA_FIN          time not null,
+    DADO_DE_BAJA         bool not null DEFAULT(false),
     primary key (ID_MEDICO)
 );
 
@@ -113,6 +113,7 @@ create table PACIENTE
     TELEFONO             char(10) CHECK(TELEFONO REGEXP '^[0-9]{10}$'),
     CORREO               varchar(128) not null CHECK (CORREO REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
     AFILIACION           char(16) not null CHECK (AFILIACION IN ('NO APORTA', 'SEGURO GENERAL', 'SEGURO VOLUNTARIO', 'SEGURO CAMPESINO')),
+    DADO_DE_BAJA         bool not null DEFAULT(false),
     primary key (ID_PACIENTE)
 );
 
@@ -127,12 +128,15 @@ create table PERTENECE
 );
 
 /*==============================================================*/
-/* Table: RECETA                                                */
+/* Table: TRATAMIENTO                                                */
 /*==============================================================*/
-create table RECETA
+create table TRATAMIENTO
 (
     ID_DIAGNOSTICO       int not null CHECK(ID_DIAGNOSTICO > 0),
     ID_MEDICAMENTO       int not null CHECK(ID_MEDICAMENTO > 0),
+    DOSIS_MG             float not null CHECK(DOSIS_MG > 0),
+    FRECUENCIA_HORAS     int not null CHECK(FRECUENCIA_HORAS > 0),
+    TIEMPO_DIAS          int not null CHECK(TIEMPO_DIAS > 0),
     primary key (ID_DIAGNOSTICO, ID_MEDICAMENTO)
 );
 
@@ -157,6 +161,7 @@ create table OPERADOR(
      APELLIDOS            varchar(64) not null,
      TELEFONO             char(10) CHECK(TELEFONO REGEXP '^[0-9]{10}$'),
      CORREO               varchar(128) not null CHECK (CORREO REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
+     DADO_DE_BAJA         bool not null DEFAULT(false),
      primary key (ID_OPERADOR)
 );
 
@@ -184,10 +189,10 @@ alter table PERTENECE add constraint FK_PERTENEC_PERTENECE_PACIENTE foreign key 
 alter table PERTENECE add constraint FK_PERTENEC_PERTENECE_GRUPO_PR foreign key (ID_GRUPO)
     references GRUPO_PRIORITARIO (ID_GRUPO) on delete no action on update no action;
 
-alter table RECETA add constraint FK_RECETA_RECETA_CITA foreign key (ID_DIAGNOSTICO)
+alter table TRATAMIENTO add constraint FK_TRATAMIENTO_TRATAMIENTO_CITA foreign key (ID_DIAGNOSTICO)
     references DIAGNOSTICO (ID_DIAGNOSTICO) on delete no action on update no action;
 
-alter table RECETA add constraint FK_RECETA_RECETA2_MEDICAME foreign key (ID_MEDICAMENTO)
+alter table TRATAMIENTO add constraint FK_TRATAMIENTO_TRATAMIENTO2_MEDICAME foreign key (ID_MEDICAMENTO)
     references MEDICAMENTO (ID_MEDICAMENTO) on delete no action on update no action;
 
 alter table TURNO add constraint FK_TURNO_ATIENDE_MEDICO foreign key (ID_MEDICO)
