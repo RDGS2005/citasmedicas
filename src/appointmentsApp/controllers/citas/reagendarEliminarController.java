@@ -38,7 +38,7 @@ public class reagendarEliminarController implements Initializable {
     private void cargarCitas(ArrayList<Cita> citas){
         contenedorCitas.getChildren().clear();
         for(Cita c: citas){
-            try{
+            try{// AQUI SE DEBE VERIFICAR SI ESQUE ES PARA PACIENTE O PARA OPERADOR/MEDICO, EL QUE SE DESCRIBE ES PARA PACIENTE
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/citas/item_cita1.fxml"));
                 Node item = loader.load();
 
@@ -48,6 +48,15 @@ public class reagendarEliminarController implements Initializable {
 
                 Separator separator = new Separator();
                 contenedorCitas.getChildren().add(separator);
+
+                /*con la verificacion de si el usuario es operador o medico es lo mismo pero
+                                    se carga el item de cita 5
+                *                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/citas/item_cita5.fxml"));
+
+                                    citasPendientesMedicoOperadorItemController controller = loader.getController();
+                                    se carga el operador para medico y operador
+
+                 * */
 
             } catch (IOException e) {
                 e.printStackTrace();

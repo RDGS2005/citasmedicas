@@ -59,7 +59,7 @@ public class doctorMenuController {
 
     @FXML
     void agendarCita(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/citas/agendarCita.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/operadores/agendarCitaOperadorMedico.fxml"));
         Parent root = loader.load();
         generalController.openNewWindow(event, root,"Agendar Cita");
 

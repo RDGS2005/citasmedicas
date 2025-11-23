@@ -45,6 +45,7 @@ public class registrarMedicoController {
     @FXML
     void registrarMedico(ActionEvent event) {
 
+
     }
 
 }

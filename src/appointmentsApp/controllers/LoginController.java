@@ -42,6 +42,8 @@ public class LoginController implements Initializable {
         Usuario usuario = new Usuario("");
 
 
+        try{
+
 
             switch (userRoles.getSelectionModel().getSelectedItem()) {
                 case "PACIENTE":
@@ -149,6 +151,11 @@ public class LoginController implements Initializable {
                     break;
 
             }
+        }catch(Exception e){
+            Alert error = manageAlert.error("Error",null,"Debe seleccionar un rol");
+            error.showAndWait();
+
+        }
 
 
 

@@ -1,5 +1,6 @@
 package appointmentsApp.controllers.admin;
 
+import appointmentsApp.controllers.manageAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +12,7 @@ import javafx.scene.control.ToggleGroup;
 public class registrarPacienteController {
 
     @FXML
-    public ComboBox<?> afiliacion;
+    public ComboBox<String> afiliacion;
 
     @FXML
     public Button botonRegistrarPaciente;
@@ -48,6 +49,8 @@ public class registrarPacienteController {
 
     @FXML
     void registrarPaciente(ActionEvent event) {
+        //AQUI SE HACE EL INSERT INTO
+        //manageAlert.error("error","EEROR AL INGRESAR","LOS DATOS SON INCORRECTOS")
 
     }
 

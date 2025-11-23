@@ -24,5 +24,13 @@ public class item2MedicoController {
     @FXML
     private Label lblNombre;
 
+    public void addData(){
+        lblIdMedico.setText("ID");
+        lblNombre.setText("ERICK");
+        lblApellido.setText("BAJAÑA");
+        lblCedula.setText("CEDULA");
+
+    }
+
 }
 
