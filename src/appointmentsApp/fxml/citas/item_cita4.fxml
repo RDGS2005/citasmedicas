@@ -23,7 +23,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lblIdResult" text="Aqui va El ID" />
+                  <Label fx:id="lblIdResult" text="Aqui vas El ID" />
                </children>
             </HBox>
                 <Label fx:id="lblEspecialidad" text="Especialidad:" />
