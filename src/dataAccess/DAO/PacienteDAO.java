@@ -123,6 +123,7 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
     public boolean update(PacienteDTO entity) throws Exception {
         return true;
     }
+
     //ELIMINAR PERFIL
     public boolean dardebaja(Integer id_paciente) throws Exception{
         return true;

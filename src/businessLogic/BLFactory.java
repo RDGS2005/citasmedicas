@@ -27,8 +27,10 @@ public class BLFactory<T>  {
     public boolean upd(T oT) throws Exception {
         return oDAO.update(oT);
     }
-
+    /*
     public boolean del(Integer id) throws Exception {
         return oDAO.delete(id);
     }
+    */
+
 }

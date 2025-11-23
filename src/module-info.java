@@ -8,6 +8,14 @@ module citasmedicas {
     requires javafx.swing;
     requires java.sql;
 
+
+
     opens appointmentsApp;
-    opens appointmentsApp.controlers;
+    opens appointmentsApp.controllers;
+    opens appointmentsApp.users;
+    opens appointmentsApp.controllers.paciente;
+    opens appointmentsApp.controllers.medico;
+    opens appointmentsApp.controllers.citas;
+    opens appointmentsApp.controllers.medicamentos;
+    opens appointmentsApp.controllers.admin;
 }

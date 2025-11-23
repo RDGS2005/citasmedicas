@@ -154,8 +154,8 @@ create table TURNO
 );
 
 create table OPERADOR(
-                         ID_OPERADOR          int not null auto_increment,
-                         CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
+    ID_OPERADOR          int not null auto_increment,
+    CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
      PASSWORD             char(66) not null,
      NOMBRES              varchar(64) not null,
      APELLIDOS            varchar(64) not null,

@@ -18,6 +18,7 @@ public class AppIess extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/appointmentsApp/fxml/loginPage.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

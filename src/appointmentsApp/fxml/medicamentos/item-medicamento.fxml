@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox prefHeight="108.0" prefWidth="378.0" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appointmentsApp.controllers.medicamentos.itemMedicamentosController">
+
+    <children>
+
+        <!-- Columna con la información de la cita -->
+        <VBox fx:id="infoBox" spacing="5">
+            <children>
+                <Label fx:id="lblPrincipioActivo" text="Principio Activo:" />
+                <Label fx:id="lblDescripcion" text="Descripcion:" />
+
+            </children>
+        </VBox>
+
+
+
+    </children>
+
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15" />
+    </padding>
+
+</HBox>
