@@ -48,7 +48,7 @@ public class citasPendientesMedicoOperadorItemController {
     private Label lblIdCita;
 
     @FXML
-    private Label lblIdResult;
+    private Label lblIdPaciente;
 
     @FXML
     private Label lblNombrePaciente;
@@ -93,10 +93,12 @@ public class citasPendientesMedicoOperadorItemController {
 
     }
 
+
+
     public void setData (Cita cita){
-        lblIdResult.setText(Integer.toString(cita.getIdCita()));
+        lblIdCita.setText("ID CITA" + cita.getIdCita());
         lblEspecialidad.setText("Especialidad: " + cita.getEspecialidad());
-        lblDoctor.setText("Doctor: " + cita.getDoctor());
+        lblIdPaciente.setText(Integer.toString(cita.getIdPaciente()));
         lblNombrePaciente.setText("Nombre Paciente: " + cita.getDoctor());
         lblApellidoPaciente.setText("Apellidos Paciente: " + cita.getDoctor());
         lblFecha.setText("Fecha: " + cita.getFecha());

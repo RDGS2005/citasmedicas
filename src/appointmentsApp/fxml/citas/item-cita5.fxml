@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- ESTE ITEM SE USA PARA REPRESENTAR LAS CITAS PENDIENTES DEL USUARIO PARA REAGENDARLAS -->
+<!-- ESTE ITEM SE USA PARA REPRESENTAR LAS CITAS PENDIENTES DEL MEDICO Y OPERADOR PARA REAGENDARLAS -->
 
 <HBox prefHeight="160.0" prefWidth="441.0" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appointmentsApp.controllers.citas.citasPendientesMedicoOperadorItemController">
 

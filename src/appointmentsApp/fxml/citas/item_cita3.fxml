@@ -19,7 +19,7 @@
                 <Label fx:id="lblEspecialidad" text="Especialidad:" />
                 <Label fx:id="lblIdPaciente" text="Cedula Paciente:" />
                 <Label fx:id="lblNombrePaciente" text="Nombre Paciente:" />
-                <Label fx:id="lblApellidosPaciente" text="Apellido Paciente:" />
+                <Label fx:id="lblApellidoPaciente" text="Apellido Paciente:" />
                 <Label fx:id="lblFecha" text="Fecha:" />
                 <Label fx:id="lblHora" text="Hora:" />
 
