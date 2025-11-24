@@ -25,8 +25,19 @@ public class MedicoDTO {
         InicioJornada = inicioJornada;
         FinJornada = finJornada;
     }
-    //CONSTRUCTOR PARA WRITE
     public MedicoDTO(Integer id, String cedula, String especializacion, String nombres, String apellidos, String sexo, LocalDate fecha, LocalTime inicioJornada, LocalTime finJornada) {
+        Id = id;
+        Cedula = cedula;
+        Especializacion = especializacion;
+        Nombres = nombres;
+        Apellidos = apellidos;
+        Sexo = sexo;
+        FechaNacimiento = fecha;
+        InicioJornada = inicioJornada;
+        FinJornada = finJornada;
+    }
+    //CONSTRUCTOR PARA WRITE
+    public MedicoDTO(String cedula, String especializacion, String nombres, String apellidos, String sexo, LocalDate fecha, LocalTime inicioJornada, LocalTime finJornada) {
         Cedula = cedula;
         Especializacion = especializacion;
         Nombres = nombres;

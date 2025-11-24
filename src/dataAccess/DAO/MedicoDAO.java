@@ -329,4 +329,47 @@ public class MedicoDAO extends MySQLDataHelper implements IDAO<MedicoDTO>{
         }
         return lst;
     }
+
+    public List<MedicoDTO> obtenerMedicosPorEspecialidad(String especialidadSeleccionada) throws Exception {
+        List<MedicoDTO> lst = new ArrayList<>();
+        String query = "SELECT "
+                + "m.ID_MEDICO, "
+                + "m.CEDULA, "
+                + "m.NOMBRE, "
+                + "m.APELLIDO, "
+                + "m.SEXO, "
+                + "m.FECHA_NACIMIENTO, "
+                + "m.JORNADA_INICIO, "
+                + "m.JORNADA_FIN, "
+                + "e.DESCRIPCION "
+                + "FROM MEDICO m "
+                + "INNER JOIN ESPECIALIZACION e ON m.ID_ESPECIALIZACION = e.ID_ESPECIALIZACION "
+                + "WHERE e.DESCRIPCION = ? AND m.DADO_DE_BAJA = 0";
+
+        try {
+            Connection conn = conectarBD();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, especialidadSeleccionada);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                MedicoDTO dto = new MedicoDTO(
+                        rs.getInt(1),           // ID_MEDICO
+                        rs.getString(2),        // CEDULA
+                        rs.getString(9),        // DESCRIPCION (especialidad)
+                        rs.getString(3),        // NOMBRE
+                        rs.getString(4),        // APELLIDO
+                        rs.getString(5),        // SEXO
+                        rs.getDate(6).toLocalDate(), // FECHA_NACIMIENTO
+                        rs.getTime(7).toLocalTime(), // JORNADA_INICIO
+                        rs.getTime(8).toLocalTime()  // JORNADA_FIN
+                );
+                lst.add(dto);
+            }
+
+        } catch (SQLException e) {
+            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "obtenerMedicosPorEspecialidad");
+        }
+        return lst;
+    }
 }

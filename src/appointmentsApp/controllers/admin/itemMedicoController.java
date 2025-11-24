@@ -2,6 +2,8 @@ package appointmentsApp.controllers.admin;
 
 import appointmentsApp.controllers.generalController;
 import appointmentsApp.controllers.manageAlert;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.DTO.MedicoDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +53,15 @@ public class itemMedicoController {
         Alert information = manageAlert.confirmation("Confirmacion","Eliminacion de Medico","Desea eliminar al medico seleccionado?");
 
         if(information.showAndWait().get()== ButtonType.OK){
-            Alert alert = manageAlert.information("Medico eliminado", "Exito en la eliminacion del medico", "El medico fue dado de baja del sistema. Puede agregarlo de nuevo en cualquier momento");
+            try{
+                MedicoDAO mdao = new MedicoDAO();
+                mdao.dardebaja(Integer.parseInt(lblIdMedico.getText()));
+            } catch (Exception e) {
+                Alert alert = manageAlert.information("Medico no fue eliminado", "Medico no valido", "El medico no pudo ser dado de baja");
+                alert.showAndWait();
+                e.printStackTrace();
+            }
+            Alert alert = manageAlert.information("Medico eliminado", "Exito en la eliminacion del medico", "El medico fue dado de baja del sistema");
             alert.showAndWait();
             infoBox.getChildren().clear();
             buttonBox.getChildren().clear();
@@ -68,16 +78,22 @@ public class itemMedicoController {
         registrarMedicoController controller = (registrarMedicoController) loader.getController();
         controller.botonRegistrarMedico.setText("ACTUALIZAR INFORMACION EXISTENTE");
         controller.fieldNombres.setText("NOMBRE ANTIGUO");
+        try{
+            MedicoDAO mdao = new MedicoDAO();
+            controller.setDto(mdao.readBy(Integer.parseInt(lblIdMedico.getText())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         generalController.openNewWindow(event,root,"Registrar Medico");
 
     }
 
-    public void addData(){
-        lblIdMedico.setText("ID");
-        lblNombre.setText("ERICK");
-        lblApellido.setText("BAJAÑA");
-        lblCedula.setText("CEDULA");
-        lblIdResult.setText("5");
+    public void addData(MedicoDTO medico){
+        lblIdMedico.setText(medico.Id.toString());
+        lblNombre.setText(medico.Nombres);
+        lblApellido.setText(medico.Apellidos);
+        lblCedula.setText(medico.Cedula);
+        lblIdResult.setText(medico.Especializacion);
 
     }
 

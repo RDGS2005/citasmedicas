@@ -1,6 +1,7 @@
 package appointmentsApp.controllers.medicamentos;
 
 import appointmentsApp.controllers.Medicamento;
+import dataAccess.DTO.MedicamentoDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -16,9 +17,9 @@ public class itemMedicamentosController {
     @FXML
     private Label lblPrincipioActivo;
 
-    public void setData(Medicamento medicamento){
-        lblDescripcion.setText("Descripcion: " + medicamento.getDescripcion() );
-        lblPrincipioActivo.setText("Principio Activo: " + medicamento.getPrincipioActivo());
+    public void setData(MedicamentoDTO medicamento){
+        lblDescripcion.setText("Descripcion: " + medicamento.Nombre );
+        lblPrincipioActivo.setText("Principio Activo: " + medicamento.PrincipioActivo);
     }
 
 }

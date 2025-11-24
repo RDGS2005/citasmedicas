@@ -1,16 +1,68 @@
 package appointmentsApp.controllers.medico;
 
 import appointmentsApp.controllers.generalController;
+import appointmentsApp.controllers.manageAlert;
+import appointmentsApp.controllers.operadorMenuController;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.DAO.PacienteDAO;
+import dataAccess.DTO.MedicoDTO;
+import dataAccess.DTO.PacienteDTO;
+import dataAccess.fraseRandom;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class doctorMenuController {
+public class doctorMenuController implements Initializable {
+    private Integer idMedico;
+    MedicoDAO mdao;
+    fraseRandom fr;
+
+    public void setId(Integer id) {
+        this.idMedico = id;
+        cargarDatosMedico();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        mdao = new MedicoDAO();
+        fr = new fraseRandom();
+    }
+
+    private void cargarDatosMedico() {
+        if (idMedico == null) {
+            return; // No hacer nada si el ID no está establecido
+        }
+
+        try {
+            MedicoDTO dto = mdao.readBy(idMedico);
+            if (dto != null) {
+                lblApellidos.setText(dto.Apellidos);
+                lblCedula.setText(dto.Cedula);
+                lblEspecializacion.setText(dto.Especializacion);
+                lblFechaNacimiento.setText(dto.FechaNacimiento.toString());
+                lblNombres.setText(dto.Nombres);
+                lblFraseDia.setText(fraseRandom.frase());
+            } else {
+                Alert mensajeError = manageAlert.error("ERROR", "Medico no encontrado",
+                        "No se pudo encontrar la información del medico con ID: " + idMedico);
+                mensajeError.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert mensajeError = manageAlert.error("ERROR AL CARGAR DATOS", "ERROR AL CARGAR DATOS",
+                    "Intentelo de nuevo. Error: " + e.getMessage());
+            mensajeError.showAndWait();
+            e.printStackTrace(); // Para debugging
+        }
+    }
 
     @FXML
     private Button botonAgendarCita;
@@ -76,6 +128,9 @@ public class doctorMenuController {
     void consultarCitasPendientes(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/medico/verCitasPendientes.fxml"));
         Parent root = loader.load();
+
+       verPendientesController controller = loader.getController();
+        controller.setId(idMedico);
         generalController.openNewWindow(event, root,"Ver Citas Pendientes");
     }
 

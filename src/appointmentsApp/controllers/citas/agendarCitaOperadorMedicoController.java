@@ -1,20 +1,50 @@
 package appointmentsApp.controllers.citas;
 
+import appointmentsApp.controllers.manageAlert;
+import dataAccess.DAO.CitaDAO;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.DAO.PacienteDAO;
+import dataAccess.DAO.TurnoDAO;
+import dataAccess.DTO.CitaDTO;
+import dataAccess.DTO.TurnoDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
 public class agendarCitaOperadorMedicoController implements Initializable {
+    MedicoDAO mdao;
+    TurnoDAO tdao;
+    CitaDAO cdao;
+    PacienteDAO pdao;
 
+    private static LocalTime parseTimeSafely(String input) {
+        // Common time patterns
+        String[] patterns = {
+                "H:mm",      // 0-23 hour format
+                "HH:mm",     // 00-23 hour format
+                "h:mma",     // 1-12 hour format with AM/PM
+                "hh:mma",    // 01-12 hour format with AM/PM
+                "h a",       // e.g., 5 PM
+                "hh a"       // e.g., 05 PM
+        };
+
+        for (String pattern : patterns) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH);
+                return LocalTime.parse(input.toUpperCase(Locale.ENGLISH), formatter);
+            } catch (DateTimeParseException ignored) {
+                // Try next pattern
+            }
+        }
+        return null; // No pattern matched
+    }
     @FXML
     private Button botonAgendarCita;
 
@@ -119,24 +149,90 @@ public class agendarCitaOperadorMedicoController implements Initializable {
 
     @FXML
     void botonAgendarCita(ActionEvent event) {
+        String especialidadSeleccionada = especialidad.getValue();
+        ToggleButton horaSelect = (ToggleButton) horario.getSelectedToggle();
 
+        if (especialidadSeleccionada != null && !especialidadSeleccionada.isEmpty() && fecha.getValue() != null && horaSelect != null && !doctor.getValue().isEmpty()) {
+            try {
+                cdao.create(new CitaDTO(doctor_turno.get(doctor.getValue()), null, null, pdao.validar_cedula(cedulaPaciente.getText())));
+                recargarComboBox();
 
+            } catch (Exception e) {
+                Alert mensajeError = manageAlert.error("ERROR", "Error al cargar doctores", e.getMessage());
+                mensajeError.showAndWait();
+            }
+        }
     }
-
-
 
     @FXML
     void validarCedula(ActionEvent event) {
-        botonAgendarCita.setDisable(false);
+        try{
+            if(pdao.validar_cedula(cedulaPaciente.getText()) != -1){
+                botonAgendarCita.setDisable(false);
+            }else{
+                Alert mensajeError = manageAlert.error("CEDULA NO VALIDA", "CEDULA NO VALIDA", "Intentelo de nuevo");
+                mensajeError.showAndWait();
+            }
+        }catch(Exception e){
+            Alert mensajeError = manageAlert.error("CEDULA NO VALIDA", "CEDULA NO VALIDA", "Intentelo de nuevo");
+            mensajeError.showAndWait();
+        }
+
     }
 
-    private String especialidades [] = {"nombre ESPE1", "nombre ESPE2"};
-    private String doctores [] = {"nombre DOC1","nombre DOC2"};
 
+    private Map<String, Integer> doctor_turno;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        especialidad.getItems().addAll(especialidades);
-        doctor.getItems().addAll(doctores);
+        mdao = new MedicoDAO();
+        tdao = new TurnoDAO();
+        cdao = new CitaDAO();
+        pdao = new PacienteDAO();
+        try{
+            especialidad.getItems().addAll(mdao.obtenerEspecialidades());
+            especialidad.setOnAction(this::onEspecialidadSeleccionada);
+            fecha.setOnAction(this::onEspecialidadSeleccionada);
+            horario.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+                if (newToggle != null) {
+                    recargarComboBox();
+                }
+            });
+        }catch(Exception e){
+            Alert mensajeError = manageAlert.error("ERROR AL CARGAR DATOS", "ERROR AL CARGAR DATOS", "Intentelo de nuevo");
+            mensajeError.showAndWait();
+        }
+    }
+
+    private void onEspecialidadSeleccionada(ActionEvent event) {
+        recargarComboBox();
+    }
+    private void recargarComboBox()
+    {
+        String especialidadSeleccionada = especialidad.getValue();
+        ToggleButton horaSelect = (ToggleButton) horario.getSelectedToggle();
+
+        if (especialidadSeleccionada != null && !especialidadSeleccionada.isEmpty() && fecha.getValue() != null && horaSelect != null) {
+            try {
+                // Limpiar combo de doctores
+                doctor.getItems().clear();
+                doctor_turno = new HashMap<>();
+
+                // Obtener doctores por especialidad
+                List<TurnoDTO> disponibles = tdao.turnosDisponibles(especialidadSeleccionada, fecha.getValue(), parseTimeSafely(horaSelect.getText()));
+                // Agregar nombres de doctores al combo
+                for (TurnoDTO turno : disponibles) {
+                    doctor_turno.put(turno.Nombre_medico, turno.Id);
+                    doctor.getItems().add (turno.Nombre_medico);
+                }
+
+                // Habilitar combo de doctores
+                doctor.setDisable(false);
+
+            } catch (Exception e) {
+                Alert mensajeError = manageAlert.error("ERROR", "Error al cargar doctores", e.getMessage());
+                mensajeError.showAndWait();
+            }
+        }
     }
 
 

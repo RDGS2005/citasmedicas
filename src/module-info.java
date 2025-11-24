@@ -7,6 +7,7 @@ module citasmedicas {
     requires javafx.media;
     requires javafx.swing;
     requires java.sql;
+    requires jdk.jshell;
 
 
     opens appointmentsApp;

@@ -28,7 +28,7 @@
             <String fx:value="bordeAbajo" />
          </styleClass>
          <children>
-            <Label layoutX="46.0" layoutY="49.0" text="Aqui va una frase cool " />
+            <Label fx:id="fraseDia" layoutX="46.0" layoutY="49.0" text="Aqui va una frase cool " />
             <Pane layoutX="429.0" layoutY="7.0" prefHeight="84.0" prefWidth="92.0" styleClass="logoIess" />
          </children>
       </Pane>

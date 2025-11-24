@@ -2,6 +2,9 @@ package appointmentsApp.controllers.admin;
 
 import appointmentsApp.controllers.generalController;
 import appointmentsApp.controllers.manageAlert;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.DAO.OperadorDAO;
+import dataAccess.DTO.OperadorDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +57,15 @@ public class itemOperadorController {
         Alert information = manageAlert.confirmation("Confirmacion","Eliminacion de Operador","Desea eliminar al operador seleccionado?");
 
         if(information.showAndWait().get()== ButtonType.OK){
-            Alert alert = manageAlert.information("Operador eliminado", "Exito en la eliminacion del operador", "El operador fue dado de baja del sistema. Puede agregarlo de nuevo en cualquier momento");
+            try{
+                OperadorDAO odao = new OperadorDAO();
+                odao.dardebaja(Integer.parseInt(lblIdOperador.getText()));
+            } catch (Exception e) {
+                Alert alert = manageAlert.information("Operador no fue eliminado", "Operador no valido", "El operador no pudo ser dado de baja");
+                alert.showAndWait();
+                e.printStackTrace();
+            }
+            Alert alert = manageAlert.information("Operador eliminado", "Exito en la eliminacion del operador", "El operador fue dado de baja del sistema");
             alert.showAndWait();
             infoBox.getChildren().clear();
             buttonBox.getChildren().clear();
@@ -71,17 +82,23 @@ public class itemOperadorController {
         registrarOperadorController controller = loader.getController();
         controller.botonRegistrarOperador.setText("ACTUALIZAR INFORMACION EXISTENTE");
         controller.fieldNombres.setText("NOMBRE ANTIGUO");
+        try{
+            OperadorDAO odao = new OperadorDAO();
+            controller.setDto(odao.readBy(Integer.parseInt(lblIdOperador.getText())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         generalController.openNewWindow(event,root,"Modificar Informacion de un Operador");
 
     }
 
-    public void addData(){
-        lblIdOperador.setText("ID");
-        lblNombres.setText("ERICK");
-        lblApellidos.setText("BAJAÑA");
-        lblCedula.setText("CEDULA");
-        lblCorreo.setText("CORREO");
-        lblIdResult.setText("8");
+    public void addData(OperadorDTO operador){
+        lblIdOperador.setText(operador.Id.toString());
+        lblNombres.setText(operador.Nombres);
+        lblApellidos.setText(operador.Apellidos);
+        lblCedula.setText(operador.Cedula);
+        lblCorreo.setText(operador.Correo);
+        lblIdResult.setText("OPERADOR");
 
     }
 

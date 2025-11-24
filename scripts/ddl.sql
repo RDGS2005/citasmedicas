@@ -8,6 +8,7 @@ create table CITA
     REFERENCIA           int CHECK (REFERENCIA > 0),
     CONTRARREFERENCIA    int CHECK (CONTRARREFERENCIA > 0),
     ID_PACIENTE          int not null CHECK (ID_PACIENTE > 0),
+    ATENDIDA             bool not null DEFAULT(false),
     CANCELADA            bool not null DEFAULT(false),
     primary key (ID_CITA)
 );

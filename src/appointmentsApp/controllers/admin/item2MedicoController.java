@@ -1,8 +1,11 @@
 package appointmentsApp.controllers.admin;
 
+import dataAccess.DTO.MedicoDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class item2MedicoController {
 
@@ -24,12 +27,12 @@ public class item2MedicoController {
     @FXML
     private Label lblNombre;
 
-    public void addData(){
-        lblIdMedico.setText("ID");
-        lblNombre.setText("ERICK");
-        lblApellido.setText("BAJAÑA");
-        lblCedula.setText("CEDULA");
-
+    public void addData(MedicoDTO medico){
+        lblIdMedico.setText(medico.Id.toString());
+        lblNombre.setText(medico.Nombres);
+        lblApellido.setText(medico.Apellidos);
+        lblCedula.setText(medico.Cedula);
+        lblEspecialidad.setText(medico.Especializacion);
     }
 
 }

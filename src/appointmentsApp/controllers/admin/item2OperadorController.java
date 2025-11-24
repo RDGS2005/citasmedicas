@@ -1,5 +1,7 @@
 package appointmentsApp.controllers.admin;
 
+import dataAccess.DTO.MedicoDTO;
+import dataAccess.DTO.OperadorDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,6 +40,13 @@ public class item2OperadorController {
     @FXML
     private Label lblTelefono;
 
-
+    public void addData(OperadorDTO operador){
+        lblIdOperador.setText(operador.Id.toString());
+        lblNombres.setText(operador.Nombres);
+        lblApellidos.setText(operador.Apellidos);
+        lblCedula.setText(operador.Cedula);
+        lblCorreo.setText(operador.Correo);
+        lblTelefono.setText(operador.Telefono);
+    }
 
 }

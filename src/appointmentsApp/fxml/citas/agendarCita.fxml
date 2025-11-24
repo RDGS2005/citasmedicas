@@ -38,36 +38,36 @@
         </GridPane>
         <GridPane layoutX="165.0" layoutY="239.0" prefHeight="81.0" prefWidth="414.0">
             <children>
-                <ToggleButton fx:id="hora1" text="07:00" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <ToggleButton fx:id="hora1" text="08:00" GridPane.columnIndex="0" GridPane.rowIndex="0">
                <toggleGroup>
                   <ToggleGroup fx:id="horario" />
                </toggleGroup></ToggleButton>
-                <ToggleButton fx:id="hora2" text="07:30" toggleGroup="$horario" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora3" text="08:00" toggleGroup="$horario" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora4" text="08:30" toggleGroup="$horario" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora5" text="09:00" toggleGroup="$horario" GridPane.columnIndex="4" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora6" text="09:30" toggleGroup="$horario" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora2" text="08:20" toggleGroup="$horario" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora3" text="08:40" toggleGroup="$horario" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora4" text="09:00" toggleGroup="$horario" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora5" text="09:20" toggleGroup="$horario" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora6" text="09:40" toggleGroup="$horario" GridPane.columnIndex="5" GridPane.rowIndex="0" />
                 <ToggleButton fx:id="hora7" text="10:00" toggleGroup="$horario" GridPane.columnIndex="6" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora8" text="10:30" toggleGroup="$horario" GridPane.columnIndex="7" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora9" text="11:00" toggleGroup="$horario" GridPane.columnIndex="8" GridPane.rowIndex="0" />
-                <ToggleButton fx:id="hora10" text="11:30" toggleGroup="$horario" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora11" text="12:00" toggleGroup="$horario" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora12" text="12:30" toggleGroup="$horario" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora13" text="13:00" toggleGroup="$horario" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora14" text="13:30" toggleGroup="$horario" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora15" text="14:00" toggleGroup="$horario" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora16" text="14:30" toggleGroup="$horario" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora17" text="15:00" toggleGroup="$horario" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora18" text="15:30" toggleGroup="$horario" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-                <ToggleButton fx:id="hora19" text="16:00" toggleGroup="$horario" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora20" text="16:30" toggleGroup="$horario" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora21" text="17:00" toggleGroup="$horario" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora22" text="17:30" toggleGroup="$horario" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora23" text="18:00" toggleGroup="$horario" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora24" text="18:30" toggleGroup="$horario" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora25" text="19:00" toggleGroup="$horario" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora26" text="19:30" toggleGroup="$horario" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-                <ToggleButton fx:id="hora27" text="20:00" toggleGroup="$horario" GridPane.columnIndex="8" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora8" text="10:20" toggleGroup="$horario" GridPane.columnIndex="7" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora9" text="10:40" toggleGroup="$horario" GridPane.columnIndex="8" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="hora10" text="11:00" toggleGroup="$horario" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora11" text="11:20" toggleGroup="$horario" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora12" text="11:40" toggleGroup="$horario" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora13" text="12:00" toggleGroup="$horario" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora14" text="12:20" toggleGroup="$horario" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora15" text="12:40" toggleGroup="$horario" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora16" text="13:00" toggleGroup="$horario" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora17" text="13:20" toggleGroup="$horario" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora18" text="13:40" toggleGroup="$horario" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="hora19" text="14:00" toggleGroup="$horario" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora20" text="14:20" toggleGroup="$horario" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora21" text="14:40" toggleGroup="$horario" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora22" text="15:00" toggleGroup="$horario" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora23" text="15:20" toggleGroup="$horario" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora24" text="15:40" toggleGroup="$horario" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora25" text="16:00" toggleGroup="$horario" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora26" text="16:20" toggleGroup="$horario" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="hora27" text="16:40" toggleGroup="$horario" GridPane.columnIndex="8" GridPane.rowIndex="2" />
             </children>
             <columnConstraints>
                 <ColumnConstraints />

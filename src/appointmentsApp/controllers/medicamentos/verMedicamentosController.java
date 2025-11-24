@@ -1,10 +1,14 @@
 package appointmentsApp.controllers.medicamentos;
 
 import appointmentsApp.controllers.Medicamento;
+import appointmentsApp.controllers.manageAlert;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.DTO.MedicamentoDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
@@ -12,6 +16,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class verMedicamentosController implements Initializable {
@@ -23,20 +28,21 @@ public class verMedicamentosController implements Initializable {
     private Label lblTitulo;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // EJEMPLO: cargar citas de prueba
-        ArrayList<Medicamento> lista = new ArrayList<>();
-        lista.add(new Medicamento("Buprex forte Jarabe","Ibuprofeno 450 mg"));
-        lista.add(new Medicamento("Singripal Sobre","Paracetamol + Pseudorefrina + Loratadina"));
-        lista.add(new Medicamento("Un medicamento","Una descripcion"));
-
-
-        cargarCitas(lista);
-
+        MedicoDAO mdao = new MedicoDAO();
+        try{
+            List<MedicamentoDTO> lista = mdao.consultarMedicamentos();
+            cargarMedicamentos(lista);
+        } catch (Exception e) {
+            Alert mensajeError = manageAlert.error("ERROR AL CARGAR DATOS", "ERROR AL CARGAR DATOS",
+                    "Intentelo de nuevo. Error: " + e.getMessage());
+            mensajeError.showAndWait();
+            e.printStackTrace(); // Para debugging
+        }
     }
 
-    private void cargarCitas(ArrayList<Medicamento> medicamentos){
+    private void cargarMedicamentos(List<MedicamentoDTO> medicamentos){
         contenedorMedicamentos.getChildren().clear();
-        for(Medicamento m:medicamentos){
+        for(MedicamentoDTO m:medicamentos){
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/medicamentos/item-medicamento.fxml"));
                 Node item = loader.load();

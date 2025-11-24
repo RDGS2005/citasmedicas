@@ -1,5 +1,8 @@
 package appointmentsApp.controllers;
 
+import appointmentsApp.controllers.citas.agendarCitaController;
+import appointmentsApp.controllers.medico.doctorMenuController;
+import appointmentsApp.controllers.paciente.patientMenuController;
 import appointmentsApp.users.Usuario;
 import appointmentsApp.users.managerUsuario;
 import dataAccess.DAO.MedicoDAO;
@@ -77,6 +80,10 @@ public class LoginController implements Initializable {
                                 managerUsuario.setUser(usuario);
                                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/appointmentsApp/fxml/paciente/patientMenu.fxml"));
                                 Parent root = loader.load();
+
+                                patientMenuController controller = loader.getController();
+                                controller.setId(id);
+
                                 generalController.changeScene(event,root);
                             }else{
                                 Alert mensajeError = manageAlert.error("Ingreso Restringido", "Credenciales Incorrectas", "Corrija sus credenciales y pruebe nuevamente");
@@ -113,6 +120,10 @@ public class LoginController implements Initializable {
                                 managerUsuario.setUser(usuario);
                                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/appointmentsApp/fxml/medico/doctorMenu.fxml"));
                                 Parent root = loader.load();
+
+                                doctorMenuController controller = loader.getController();
+                                controller.setId(id);
+
                                 generalController.changeScene(event,root);
                             }else{
                                 Alert mensajeError = manageAlert.error("Ingreso Restringido", "Credenciales Incorrectas", "Credenciales Incorrectas");
@@ -148,6 +159,10 @@ public class LoginController implements Initializable {
                                 managerUsuario.setUser(usuario);
                                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/appointmentsApp/fxml/operadores/operadorMenu.fxml"));
                                 Parent root = loader.load();
+
+                                operadorMenuController controller = loader.getController();
+                                controller.setId(id);
+
                                 generalController.changeScene(event,root);
                             }else{
                                 Alert mensajeError = manageAlert.error("Ingreso Restringido", "Credenciales Incorrectas", "Credenciales Incorrectas");
@@ -179,6 +194,7 @@ public class LoginController implements Initializable {
                             information.showAndWait();
                             managerUsuario.setUser(usuario);
                             FXMLLoader loader = new FXMLLoader (getClass().getResource("/appointmentsApp/fxml/admin/adminMenu.fxml"));
+
                             Parent root = loader.load();
                             generalController.changeScene(event,root);
                         }else{

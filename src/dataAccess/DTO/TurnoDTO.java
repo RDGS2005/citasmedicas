@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class TurnoDTO {
-    Integer Id;
-    Integer Id_Cita;
-    LocalDate Fecha;
-    LocalTime Hora;
-    Integer Id_medico;
-    String Especialidad;
-    String Nombre_medico;
+    public Integer Id;
+    public Integer Id_Cita;
+    public LocalDate Fecha;
+    public LocalTime Hora;
+    public Integer Id_medico;
+    public String Especialidad;
+    public String Nombre_medico;
 
     public TurnoDTO() {}
     //CONSTRUCTOR PARA WRITE

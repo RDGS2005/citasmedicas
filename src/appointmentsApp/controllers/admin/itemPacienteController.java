@@ -2,6 +2,9 @@ package appointmentsApp.controllers.admin;
 
 import appointmentsApp.controllers.generalController;
 import appointmentsApp.controllers.manageAlert;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.DAO.PacienteDAO;
+import dataAccess.DTO.PacienteDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +57,15 @@ public class itemPacienteController {
         Alert information = manageAlert.confirmation("Confirmacion","Eliminacion de Paciente","Desea eliminar al paciente seleccionado?");
 
         if(information.showAndWait().get()== ButtonType.OK){
-            Alert alert = manageAlert.information("Paciente eliminado", "Exito en la eliminacion del paciente", "El paciente fue dado de baja del sistema. Puede agregarlo de nuevo en cualquier momento");
+            try{
+                PacienteDAO pdao = new PacienteDAO();
+                pdao.dardebaja(Integer.parseInt(lblIdPaciente.getText()));
+            } catch (Exception e) {
+                Alert alert = manageAlert.information("Paciente no fue eliminado", "Paciente no valido", "El paciente no puedo ser dado de baja");
+                alert.showAndWait();
+                e.printStackTrace();
+            }
+            Alert alert = manageAlert.information("Paciente eliminado", "Exito en la eliminacion del paciente", "El paciente fue dado de baja del sistema");
             alert.showAndWait();
             infoBox.getChildren().clear();
             buttonBox.getChildren().clear();
@@ -71,17 +82,23 @@ public class itemPacienteController {
         registrarPacienteController controller = loader.getController();
         controller.botonRegistrarPaciente.setText("ACTUALIZAR INFORMACION EXISTENTE");
         controller.fieldNombres.setText("NOMBRE ANTIGUO");
+        try{
+            PacienteDAO pdao = new PacienteDAO();
+            controller.setDto(pdao.readBy(Integer.parseInt(lblIdPaciente.getText())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         generalController.openNewWindow(event,root,"Modificar Informacion de un Operador");
 
 
     }
-    public void addData(){
-        lblIdPaciente.setText("ID");
-        lblNombres.setText("ERICK");
-        lblApellidos.setText("BAJAÑA");
-        lblCedula.setText("CEDULA");
-        lblCorreo.setText("CORREO");
-        lblIdResult.setText("ID");
+    public void addData(PacienteDTO paciente){
+        lblIdPaciente.setText(paciente.Id.toString());
+        lblNombres.setText(paciente.Nombres);
+        lblApellidos.setText(paciente.Apellidos);
+        lblCedula.setText(paciente.Cedula);
+        lblCorreo.setText(paciente.Correo);
+        lblIdResult.setText(paciente.Afiliacion);
 
     }
 

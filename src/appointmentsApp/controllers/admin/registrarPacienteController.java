@@ -2,6 +2,7 @@ package appointmentsApp.controllers.admin;
 
 import appointmentsApp.controllers.manageAlert;
 import dataAccess.DAO.PacienteDAO;
+import dataAccess.DTO.MedicoDTO;
 import dataAccess.DTO.PacienteDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,22 @@ import java.util.ResourceBundle;
 
 public class registrarPacienteController implements Initializable {
     private String opcionesAfiliacion [] = {"SEGURO GENERAL", "SEGURO CAMPESINO", "SEGURO VOLUNTARIO"};
+    private PacienteDAO dao;
+    private boolean update = false;
+    public void setDto(PacienteDTO dto)
+    {
+        fieldCedula.setText(dto.Cedula);
+        fieldNombres.setText(dto.Nombres);
+        fieldApellidos.setText(dto.Apellidos);
+        if(dto.Sexo.equals("MASCULINO")) sexo.selectToggle(rbHombre); else sexo.selectToggle(rbMujer);
+        fieldFechaNacimiento.setValue(dto.FechaNacimiento);
+        fieldDireccion.setText(dto.Direccion);
+        fielNacionalidad.setText(dto.Nacionalidad);
+        fieldTelefono.setText(dto.Telefono);
+        fieldCorreo.setText(dto.Correo);
+        afiliacion.setValue(dto.Afiliacion);
+        update = true;
+    }
     @FXML
     public ComboBox<String> afiliacion;
 
@@ -47,6 +64,11 @@ public class registrarPacienteController implements Initializable {
     public TextField fieldTelefono;
 
     @FXML
+    public RadioButton rbHombre;
+
+    @FXML
+    public RadioButton rbMujer;
+    @FXML
     public ToggleGroup sexo;
 
     @FXML
@@ -69,9 +91,6 @@ public class registrarPacienteController implements Initializable {
             mensajeError.showAndWait();
         }
         else{
-            PacienteDAO dao = new PacienteDAO();
-
-
             PacienteDTO paciente = new PacienteDTO(
                     fieldCedula.getText()
                     ,fieldNombres.getText()
@@ -85,7 +104,7 @@ public class registrarPacienteController implements Initializable {
                     ,afiliacion.getValue()
             );
             try{
-                dao.create(paciente, fieldPasswd.getText());
+                if(update) dao.update(paciente, fieldPasswd.getText()); else dao.create(paciente, fieldPasswd.getText());
             }catch(Exception e){
                 Alert mensajeError = manageAlert.error("Datos Invalidos", "No se puede registrar con datos invalidos", "Existen errores en los datos suministrados");
                 mensajeError.showAndWait();
@@ -97,7 +116,7 @@ public class registrarPacienteController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         afiliacion.getItems().addAll(opcionesAfiliacion);
-
+        dao = new PacienteDAO();
     }
 
 }

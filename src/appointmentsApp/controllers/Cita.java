@@ -1,5 +1,7 @@
 package appointmentsApp.controllers;
 
+import dataAccess.DTO.CitaDTO;
+
 public class Cita {
 
     private int idCita;

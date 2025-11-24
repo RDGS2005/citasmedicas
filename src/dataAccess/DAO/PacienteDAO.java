@@ -37,6 +37,26 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
         }
         return id;
     }
+    public int validar_cedula(String cedula) throws Exception{
+        int id = -1;
+        String query ="SELECT "
+                +"ID_PACIENTE"
+                +" FROM PACIENTE "
+                +"WHERE CEDULA = '" + cedula + "'";
+        try {
+            Connection conn = conectarBD();
+            Statement  stmt = conn.createStatement();
+            ResultSet  rs   = stmt.executeQuery(query);
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+        }
+        catch (SQLException e) {
+            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "login");
+        }
+        return id;
+    }
     //REGISTRAR PERFIL
     public boolean create(PacienteDTO entity, String password) throws Exception {
         String query = " INSERT INTO PACIENTE (CEDULA, PASSWORD, NOMBRE, APELLIDO, SEXO, FECHA_NACIMIENTO, DIRECCION, NACIONALIDAD, TELEFONO, CORREO, AFILIACION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -71,8 +91,8 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
         String query ="SELECT "
                     +"ID_PACIENTE, "
                     +"CEDULA, "
-                    +"NOMBRES, " 
-                    +"APELLIDOS, "
+                    +"NOMBRE, "
+                    +"APELLIDO, "
                     +"FECHA_NACIMIENTO, "
                     +"SEXO, "
                     +"DIRECCION, "
@@ -91,8 +111,8 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
                                         ,rs.getString(2)
                                         ,rs.getString(3)
                                         ,rs.getString(4)
-                                        ,rs.getString(5)
-                                        ,rs.getDate(6).toLocalDate()
+                                        ,rs.getString(6)
+                                        ,rs.getDate(5).toLocalDate()
                                         ,rs.getString(7)
                                         ,rs.getString(8)
                                         ,rs.getString(9)
@@ -134,8 +154,8 @@ public class PacienteDAO extends MySQLDataHelper implements IDAO<PacienteDTO>{
                         , rs.getString(2)
                         , rs.getString(3)
                         , rs.getString(4)
-                        , rs.getString(5)
-                        , rs.getDate(6).toLocalDate()
+                        , rs.getString(6)
+                        , rs.getDate(5).toLocalDate()
                         , rs.getString(7)
                         , rs.getString(8)
                         , rs.getString(9)

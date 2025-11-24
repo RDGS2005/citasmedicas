@@ -15,31 +15,10 @@ public abstract class MySQLDataHelper{
     private static Connection conn = null;
 
     protected MySQLDataHelper(){}
-    protected static synchronized Connection conectarBD() throws Exception
-    {
-        try
-        {
-            if(conn == null)
-            {
-                conn = DriverManager.getConnection(URL, USER, PSWD);
-                String currentDB = null;
-                String query = "SELECT DATABASE();";
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+    public Connection conectarBD() throws SQLException {
+        Connection conn = DriverManager.getConnection(URL, USER, PSWD);
 
-                if (rs.next()) currentDB = rs.getString(1);
-
-                System.out.println("Conectado a " + currentDB);
-            }
-            else
-            {
-                System.out.println("Ya conectado!");
-            }
-        }
-        catch (SQLException e)
-        {
-            throw e;
-        }
+        conn.setAutoCommit(true); // Por defecto
         return conn;
     }
     protected static void desconectarBD() throws Exception

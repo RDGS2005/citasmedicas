@@ -1,9 +1,12 @@
 package appointmentsApp.controllers.admin;
 
 import appointmentsApp.controllers.generalController;
+import dataAccess.DAO.MedicoDAO;
+import dataAccess.fraseRandom;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,8 +14,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class adminMenuController {
+public class adminMenuController implements Initializable {
+    fraseRandom fr;
+    @FXML
+    private Label fraseDia;
 
     @FXML
     private Button botonCerrarSesion;
@@ -47,6 +56,14 @@ public class adminMenuController {
 
     @FXML
     private ToggleGroup rol;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        fr = new fraseRandom();
+        fraseDia.setText(fraseRandom.frase());
+        currentDate.setText(LocalDate.now().toString());
+    }
 
     @FXML
     void cerrarSesion(ActionEvent event) throws IOException {
