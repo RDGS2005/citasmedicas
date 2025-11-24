@@ -9,7 +9,6 @@ module citasmedicas {
     requires java.sql;
 
 
-
     opens appointmentsApp;
     opens appointmentsApp.controllers;
     opens appointmentsApp.users;

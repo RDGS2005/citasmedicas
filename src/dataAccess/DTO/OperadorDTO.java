@@ -1,12 +1,12 @@
 package dataAccess.DTO;
 
 public class OperadorDTO {
-    Integer Id;
-    String Cedula;
-    String Nombres;
-    String Apellidos;
-    String Telefono;
-    String Correo;
+    public Integer Id;
+    public String Cedula;
+    public String Nombres;
+    public String Apellidos;
+    public String Telefono;
+    public String Correo;
 
     public OperadorDTO() {}
     //CONSTRUCTOR PARA READ/UPDATE

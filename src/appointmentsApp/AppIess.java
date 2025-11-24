@@ -1,6 +1,5 @@
 package appointmentsApp;
 
-import businessLogic.BLFactory;
 import dataAccess.DAO.PacienteDAO;
 import dataAccess.DTO.PacienteDTO;
 import javafx.application.Application;
@@ -24,16 +23,5 @@ public class AppIess extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        BLFactory<PacienteDTO> pacienteBL = new BLFactory<>(PacienteDAO::new);
-        try
-        {
-            List<PacienteDTO> pdtoList = pacienteBL.getAll();
-            for (PacienteDTO pdto : pdtoList) {
-                System.out.println(pdto.toString());
-            }
-        }catch(Exception e)
-        {
-            System.out.println("ERROR");
-        }
     }
 }

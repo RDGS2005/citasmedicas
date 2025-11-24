@@ -1,5 +1,7 @@
 package dataAccess;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
@@ -50,6 +52,25 @@ public abstract class MySQLDataHelper{
             }
         } catch (Exception e) {
             throw e;
+        }
+    }
+    protected static String sha256(String original) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(original.getBytes());
+
+            // Convert bytes to hex
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }

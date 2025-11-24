@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TurnoDAO extends MySQLDataHelper implements IDAO<TurnoDTO>{
-
+    public boolean create(TurnoDTO entity) throws Exception {
+        return true;
+    }
     @Override
     public TurnoDTO readBy(Integer id) throws Exception {
         TurnoDTO dto = new TurnoDTO();
@@ -28,12 +30,6 @@ public class TurnoDAO extends MySQLDataHelper implements IDAO<TurnoDTO>{
         return lst;
     }
 
-    @Override
-    public boolean create(TurnoDTO entity) throws Exception {
-        return true;
-    }
-
-    @Override
     public boolean update(TurnoDTO entity) throws Exception {
         return true;
     }

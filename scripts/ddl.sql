@@ -33,6 +33,7 @@ create table ESPECIALIZACION
 (
     ID_ESPECIALIZACION   int not null auto_increment,
     DESCRIPCION          varchar(32) not null,
+    UNIQUE (DESCRIPCION),
     primary key (ID_ESPECIALIZACION)
 );
 
@@ -44,16 +45,6 @@ create table FECHA
     ID_FECHA             int not null auto_increment,
     FECHA                date not null,
     primary key (ID_FECHA)
-);
-
-/*==============================================================*/
-/* Table: GRUPO_PRIORITARIO                                     */
-/*==============================================================*/
-create table GRUPO_PRIORITARIO
-(
-    ID_GRUPO             int not null auto_increment,
-    DESCRIPCION          varchar(32) not null,
-    primary key (ID_GRUPO)
 );
 
 /*==============================================================*/
@@ -74,6 +65,7 @@ create table MEDICAMENTO
     ID_MEDICAMENTO       int not null auto_increment,
     DESCRIPCION          varchar(32) not null,
     PRINCIPIO_ACTIVO     varchar(64) not null,
+    UNIQUE (DESCRIPCION),
     primary key (ID_MEDICAMENTO)
 );
 
@@ -84,15 +76,16 @@ create table MEDICO
 (
     ID_MEDICO            int not null auto_increment,
     CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
-    PASSWORD             char(66) not null,
+    PASSWORD             char(64) not null,
     ID_ESPECIALIZACION   int not null CHECK(ID_ESPECIALIZACION > 0),
-    NOMBRES              varchar(64) not null,
-    APELLIDOS            varchar(64) not null,
-    SEXO                 char(16),
+    NOMBRE               varchar(64) not null,
+    APELLIDO             varchar(64) not null,
+    SEXO                 varchar(16),
     FECHA_NACIMIENTO     date,
     JORNADA_INICIO       time not null,
     JORNADA_FIN          time not null,
     DADO_DE_BAJA         bool not null DEFAULT(false),
+    UNIQUE (CEDULA),
     primary key (ID_MEDICO)
 );
 
@@ -103,28 +96,19 @@ create table PACIENTE
 (
     ID_PACIENTE          int not null auto_increment,
     CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
-    PASSWORD             char(66) not null,
-    NOMBRES              varchar(64) not null,
-    APELLIDOS            varchar(64) not null,
-    SEXO                 char(16) not null,
+    PASSWORD             char(64) not null,
+    NOMBRE               varchar(64) not null,
+    APELLIDO             varchar(64) not null,
+    SEXO                 varchar(16) not null,
     FECHA_NACIMIENTO     date not null,
     DIRECCION            varchar(128),
     NACIONALIDAD         varchar(128),
     TELEFONO             char(10) CHECK(TELEFONO REGEXP '^[0-9]{10}$'),
     CORREO               varchar(128) not null CHECK (CORREO REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
-    AFILIACION           char(16) not null CHECK (AFILIACION IN ('NO APORTA', 'SEGURO GENERAL', 'SEGURO VOLUNTARIO', 'SEGURO CAMPESINO')),
+    AFILIACION           varchar(32) not null CHECK (AFILIACION IN ('NO APORTA', 'SEGURO GENERAL', 'SEGURO VOLUNTARIO', 'SEGURO CAMPESINO')),
     DADO_DE_BAJA         bool not null DEFAULT(false),
+    UNIQUE (CEDULA),
     primary key (ID_PACIENTE)
-);
-
-/*==============================================================*/
-/* Table: PERTENECE                                             */
-/*==============================================================*/
-create table PERTENECE
-(
-    ID_PACIENTE          int not null CHECK(ID_PACIENTE > 0),
-    ID_GRUPO             int not null CHECK(ID_GRUPO > 0),
-    primary key (ID_PACIENTE, ID_GRUPO)
 );
 
 /*==============================================================*/
@@ -156,12 +140,13 @@ create table TURNO
 create table OPERADOR(
     ID_OPERADOR          int not null auto_increment,
     CEDULA               char(10) not null CHECK(CEDULA REGEXP '^[0-9]{10}$'),
-     PASSWORD             char(66) not null,
-     NOMBRES              varchar(64) not null,
-     APELLIDOS            varchar(64) not null,
+     PASSWORD             char(64) not null,
+     NOMBRE               varchar(64) not null,
+     APELLIDO             varchar(64) not null,
      TELEFONO             char(10) CHECK(TELEFONO REGEXP '^[0-9]{10}$'),
      CORREO               varchar(128) not null CHECK (CORREO REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
      DADO_DE_BAJA         bool not null DEFAULT(false),
+    UNIQUE (CEDULA),
      primary key (ID_OPERADOR)
 );
 
@@ -182,12 +167,6 @@ alter table DIAGNOSTICO add constraint FK_DIAGNOST_DETERMINA_CITA foreign key (I
 
 alter table MEDICO add constraint FK_MEDICO_MEDICO_ESPECIALI foreign key (ID_ESPECIALIZACION)
     references ESPECIALIZACION (ID_ESPECIALIZACION) on delete no action on update no action;
-
-alter table PERTENECE add constraint FK_PERTENEC_PERTENECE_PACIENTE foreign key (ID_PACIENTE)
-    references PACIENTE (ID_PACIENTE) on delete no action on update no action;
-
-alter table PERTENECE add constraint FK_PERTENEC_PERTENECE_GRUPO_PR foreign key (ID_GRUPO)
-    references GRUPO_PRIORITARIO (ID_GRUPO) on delete no action on update no action;
 
 alter table TRATAMIENTO add constraint FK_TRATAMIENTO_TRATAMIENTO_CITA foreign key (ID_DIAGNOSTICO)
     references DIAGNOSTICO (ID_DIAGNOSTICO) on delete no action on update no action;

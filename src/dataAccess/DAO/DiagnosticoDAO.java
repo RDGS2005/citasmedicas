@@ -28,12 +28,10 @@ public class DiagnosticoDAO extends MySQLDataHelper implements IDAO<DiagnosticoD
         return lst;
     }
     //AGREGAR DIAGNOSTICO
-    @Override
     public boolean create(DiagnosticoDTO entity) throws Exception {
         return true;
     }
 
-    @Override
     public boolean update(DiagnosticoDTO entity) throws Exception {
         return true;
     }

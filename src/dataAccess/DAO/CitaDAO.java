@@ -28,12 +28,10 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
         return lst;
     }
     //AGENDAR CITA
-    @Override
     public boolean create(CitaDTO entity) throws Exception{
         return true;
     }
     //REAGENDAR/CANCELAR CITA
-    @Override
     public boolean update(CitaDTO entity) throws Exception{
         return true;
     }

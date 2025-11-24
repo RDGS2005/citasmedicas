@@ -1,5 +1,6 @@
 package dataAccess.DTO;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class MedicoDTO {
@@ -8,6 +9,8 @@ public class MedicoDTO {
     public String Especializacion;
     public String Nombres;
     public String Apellidos;
+    public String Sexo;
+    public LocalDate FechaNacimiento;
     public LocalTime InicioJornada;
     public LocalTime FinJornada;
 
@@ -23,11 +26,13 @@ public class MedicoDTO {
         FinJornada = finJornada;
     }
     //CONSTRUCTOR PARA WRITE
-    public MedicoDTO(String cedula, String especializacion, String nombres, String apellidos, LocalTime inicioJornada, LocalTime finJornada) {
+    public MedicoDTO(Integer id, String cedula, String especializacion, String nombres, String apellidos, String sexo, LocalDate fecha, LocalTime inicioJornada, LocalTime finJornada) {
         Cedula = cedula;
         Especializacion = especializacion;
         Nombres = nombres;
         Apellidos = apellidos;
+        Sexo = sexo;
+        FechaNacimiento = fecha;
         InicioJornada = inicioJornada;
         FinJornada = finJornada;
     }

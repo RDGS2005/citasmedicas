@@ -26,12 +26,12 @@
       <Pane layoutX="184.0" layoutY="82.0" prefHeight="110.0" prefWidth="128.0" styleClass="cajaBlanca">
          <children>
             <Label layoutX="50.0" layoutY="6.0" text="SEXO" />
-            <RadioButton layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Hombre">
+            <RadioButton layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Masculino">
                <toggleGroup>
                   <ToggleGroup fx:id="sexo" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="14.0" layoutY="82.0" mnemonicParsing="false" text="Mujer" toggleGroup="$sexo" />
+            <RadioButton layoutX="14.0" layoutY="82.0" mnemonicParsing="false" text="Femenino" toggleGroup="$sexo" />
          </children>
       </Pane>
       <TextField fx:id="fieldCedula" layoutX="413.0" layoutY="114.0" prefHeight="26.0" prefWidth="214.0" />
