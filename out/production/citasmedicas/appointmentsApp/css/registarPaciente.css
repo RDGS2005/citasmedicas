@@ -1,9 +1,0 @@
-#imagenUsuario{
-    -fx-background-image: url(../resources/userImagen.jpg);
-    -fx-background-size:cover;
-    -fx-background-radius: no repeat;
-}
-
-.cajaBlanca{
-    -fx-background-color: #FAFAFA;
-}
