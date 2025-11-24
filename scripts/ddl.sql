@@ -24,6 +24,7 @@ create table DIAGNOSTICO
     CONDICION                  varchar(128) not null,
     CERTEZA                    varchar(16) not null CHECK(CERTEZA in ('DEFINITIVO', 'PROBABLE', 'TENTATIVO', 'INCIERTO', 'DIFERENCIAL')),
     TRATAMIENTO                varchar(256),
+    UNIQUE(ID_CITA),
     primary key (ID_DIAGNOSTICO)
 );
 

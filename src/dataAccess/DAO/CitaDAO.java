@@ -66,7 +66,8 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                 +"REFERENCIA, "
                 +"CONTRARREFERENCIA, "
                 +"ID_PACIENTE, "
-                +"CANCELADA "
+                +"CANCELADA, "
+                +"ATENDIDA "
                 +"FROM CITA "
                 +"WHERE ID_CITA = " + id.toString();
         try {
@@ -81,6 +82,7 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                         ,rs.getInt(4)
                         ,rs.getInt(5)
                         ,rs.getBoolean(6)
+                        ,rs.getBoolean(7)
                 );
             }
 
@@ -102,7 +104,8 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                 + "REFERENCIA, "
                 + "CONTRARREFERENCIA, "
                 + "ID_PACIENTE, "
-                + "CANCELADA "
+                + "CANCELADA, "
+                + "ATENDIDA "
                 + "FROM CITA "
                 + "ORDER BY ID_CITA DESC";
         try {
@@ -119,7 +122,8 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getBoolean(6)
+                        rs.getBoolean(6),
+                        rs.getBoolean(7)
                 );
                 lst.add(dto);
             }
@@ -212,7 +216,42 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getBoolean(6)
+                        rs.getBoolean(6),
+                        false
+                );
+                lst.add(dto);
+            }
+        } catch (SQLException e) {
+            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "consultarCitasPendientes");
+        }
+        return lst;
+    }
+
+    public List<CitaDTO> consultarCitasFaltantes(Integer id_medico) throws Exception{
+        List<CitaDTO> lst = new ArrayList<>();
+        String query = "SELECT c.ID_CITA, c.ID_TURNO, c.REFERENCIA, c.CONTRARREFERENCIA, c.ID_PACIENTE, c.CANCELADA "
+                + "FROM CITA c "
+                + "INNER JOIN TURNO t ON c.ID_TURNO = t.ID_TURNO "
+                + "INNER JOIN FECHA f ON t.ID_FECHA = f.ID_FECHA "
+                + "WHERE t.ID_MEDICO = " + id_medico.toString()
+                + " AND c.CANCELADA = 0 "
+                + " AND c.ATENDIDA = 0"
+                + " AND f.FECHA <= CURDATE() "
+                + "ORDER BY f.FECHA DESC, t.ID_HORARIO DESC";
+        try {
+            Connection conn = conectarBD();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+
+                CitaDTO dto = new CitaDTO(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getBoolean(6),
+                        false
                 );
                 lst.add(dto);
             }
@@ -229,6 +268,7 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                 + "INNER JOIN TURNO t ON c.ID_TURNO = t.ID_TURNO "
                 + "INNER JOIN FECHA f ON t.ID_FECHA = f.ID_FECHA "
                 + "WHERE c.ID_PACIENTE = " + id_paciente.toString()
+                + " AND c.ATENDIDA = 1"
                 + " ORDER BY f.FECHA DESC, t.ID_HORARIO DESC";
         try {
 
@@ -243,7 +283,8 @@ public class CitaDAO extends MySQLDataHelper implements IDAO<CitaDTO>{
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getBoolean(6)
+                        rs.getBoolean(6),
+                        true
                 );
                 lst.add(dto);
             }

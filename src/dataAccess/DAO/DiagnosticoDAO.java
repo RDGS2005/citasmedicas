@@ -49,55 +49,35 @@ public class DiagnosticoDAO extends MySQLDataHelper implements IDAO<DiagnosticoD
         }
         return dto;
     }
-    public int contarDiagnosticoPorCita(Integer id_cita) throws Exception {
-        int cantidad = 0;
-        String query = "SELECT COUNT(*) FROM DIAGNOSTICO WHERE ID_CITA = ?";
-
-        try (Connection conn = conectarBD();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, id_cita);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    cantidad = rs.getInt(1);
-                }
+    public DiagnosticoDTO readByCita(Integer id) throws Exception {
+        DiagnosticoDTO dto = null;
+        String query = "SELECT "
+                + "ID_DIAGNOSTICO, "
+                + "ID_CITA, "
+                + "SINTOMAS_IDENTIFICADOS, "
+                + "CONDICION, "
+                + "CERTEZA, "
+                + "TRATAMIENTO "
+                + "FROM DIAGNOSTICO "
+                + "WHERE ID_CITA = " + id.toString();
+        try {
+            Connection conn = conectarBD();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                dto = new DiagnosticoDTO(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)
+                );
             }
-
         } catch (SQLException e) {
-            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "contarDiagnosticoPorCita");
+            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "readBy");
         }
-        return cantidad;
-    }
-    public List<DiagnosticoDTO> obtenerDiagnosticosPorCita(Integer id_cita) throws Exception {
-        List<DiagnosticoDTO> lst = new ArrayList<>();
-
-        String query = "SELECT ID_DIAGNOSTICO, ID_CITA, SINTOMAS_IDENTIFICADOS, CONDICION, CERTEZA, TRATAMIENTO " +
-                "FROM DIAGNOSTICO WHERE ID_CITA = ?";
-
-        try (Connection conn = conectarBD();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, id_cita);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    DiagnosticoDTO dto = new DiagnosticoDTO(
-                            rs.getInt("ID_DIAGNOSTICO"),
-                            rs.getInt("ID_CITA"),
-                            rs.getString("SINTOMAS_IDENTIFICADOS"),
-                            rs.getString("CONDICION"),
-                            rs.getString("CERTEZA"),
-                            rs.getString("TRATAMIENTO")
-                    );
-                    lst.add(dto);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "obtenerDiagnosticosPorCita");
-        }
-        return lst;
+        return dto;
     }
 
     @Override
@@ -136,8 +116,10 @@ public class DiagnosticoDAO extends MySQLDataHelper implements IDAO<DiagnosticoD
     //AGREGAR DIAGNOSTICO
     public boolean create(DiagnosticoDTO entity) throws Exception {
         String query = "INSERT INTO DIAGNOSTICO (ID_CITA, SINTOMAS_IDENTIFICADOS, CONDICION, CERTEZA, TRATAMIENTO) VALUES (?, ?, ?, ?, ?)";
+        String query2 = "UPDATE CITA SET ASISTIDA = ? WHERE ID_CITA = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
+        PreparedStatement pstmt2 = null;
         ResultSet generatedKeys = null;
 
         try {
@@ -150,11 +132,14 @@ public class DiagnosticoDAO extends MySQLDataHelper implements IDAO<DiagnosticoD
             pstmt.setString(4, entity.Certeza);
             pstmt.setString(5, entity.Tratamiento);
 
-            int affectedRows = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            pstmt2 = conn.prepareStatement(query);
 
-            if (affectedRows == 0) {
-                throw new SQLException("Creating diagnostico failed, no rows affected.");
-            }
+            pstmt2.setBoolean(1, true);
+            pstmt2.setInt(2, entity.Id_cita);
+
+            pstmt.executeUpdate();
+            pstmt2.executeUpdate();
 
         } catch (SQLException e) {
             throw new ExceptionLogger(e.getMessage(), getClass().getName(), "create");
