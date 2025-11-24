@@ -51,34 +51,39 @@ public class DiagnosticoDAO extends MySQLDataHelper implements IDAO<DiagnosticoD
     }
     public DiagnosticoDTO readByCita(Integer id) throws Exception {
         DiagnosticoDTO dto = null;
-        String query = "SELECT "
-                + "ID_DIAGNOSTICO, "
-                + "ID_CITA, "
-                + "SINTOMAS_IDENTIFICADOS, "
-                + "CONDICION, "
-                + "CERTEZA, "
-                + "TRATAMIENTO "
-                + "FROM DIAGNOSTICO "
-                + "WHERE ID_CITA = " + id.toString();
+
+        String query = "SELECT ID_DIAGNOSTICO, ID_CITA, SINTOMAS_IDENTIFICADOS, " +
+                "CONDICION, CERTEZA, TRATAMIENTO " +
+                "FROM DIAGNOSTICO WHERE ID_CITA = ?";
+
         try {
             Connection conn = conectarBD();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+
+            System.out.println("QUERY ==> " + ps.toString());
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
                 dto = new DiagnosticoDTO(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6)
+                        rs.getInt("ID_DIAGNOSTICO"),
+                        rs.getInt("ID_CITA"),
+                        rs.getString("SINTOMAS_IDENTIFICADOS"),
+                        rs.getString("CONDICION"),
+                        rs.getString("CERTEZA"),
+                        rs.getString("TRATAMIENTO")
                 );
             }
+
         } catch (SQLException e) {
-            throw new ExceptionLogger(e.getMessage(), getClass().getName(), "readBy");
+            e.printStackTrace();
         }
+
         return dto;
     }
+
+
 
     @Override
     public List<DiagnosticoDTO> readAll() throws Exception {
@@ -117,48 +122,39 @@ public class DiagnosticoDAO extends MySQLDataHelper implements IDAO<DiagnosticoD
     public boolean create(DiagnosticoDTO entity) throws Exception {
         String query = "INSERT INTO DIAGNOSTICO (ID_CITA, SINTOMAS_IDENTIFICADOS, CONDICION, CERTEZA, TRATAMIENTO) VALUES (?, ?, ?, ?, ?)";
         String query2 = "UPDATE CITA SET ASISTIDA = ? WHERE ID_CITA = ?";
+
         Connection conn = null;
         PreparedStatement pstmt = null;
         PreparedStatement pstmt2 = null;
-        ResultSet generatedKeys = null;
 
         try {
             conn = conectarBD();
-            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
+            // INSERT del diagnóstico
+            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, entity.Id_cita);
             pstmt.setString(2, entity.Sintomas);
             pstmt.setString(3, entity.Condicion);
             pstmt.setString(4, entity.Certeza);
             pstmt.setString(5, entity.Tratamiento);
-
             pstmt.executeUpdate();
-            pstmt2 = conn.prepareStatement(query);
 
+            // UPDATE de la cita
+            pstmt2 = conn.prepareStatement(query2);
             pstmt2.setBoolean(1, true);
             pstmt2.setInt(2, entity.Id_cita);
-
-            pstmt.executeUpdate();
             pstmt2.executeUpdate();
 
         } catch (SQLException e) {
             throw new ExceptionLogger(e.getMessage(), getClass().getName(), "create");
         } finally {
-            if (generatedKeys != null) try {
-                generatedKeys.close();
-            } catch (SQLException e) {
-            }
-            if (pstmt != null) try {
-                pstmt.close();
-            } catch (SQLException e) {
-            }
-            if (conn != null) try {
-                conn.close();
-            } catch (SQLException e) {
-            }
+            if (pstmt != null) pstmt.close();
+            if (pstmt2 != null) pstmt2.close();
+            if (conn != null) conn.close();
         }
         return true;
     }
+
 
     public boolean update(DiagnosticoDTO entity) throws Exception {
         String query = "UPDATE DIAGNOSTICO SET ID_CITA = ?, SINTOMAS_IDENTIFICADOS = ?, CONDICION = ?, CERTEZA = ?, TRATAMIENTO = ? WHERE ID_DIAGNOSTICO = ?";

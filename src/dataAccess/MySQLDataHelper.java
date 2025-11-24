@@ -3,36 +3,28 @@ package dataAccess;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public abstract class MySQLDataHelper{
+public abstract class MySQLDataHelper {
+
     private static final String URL = "jdbc:mysql://localhost:3306/citasmedicas";
     private static final String USER = "root";
     private static final String PSWD = "";
-    private static Connection conn = null;
 
     protected MySQLDataHelper(){}
-    public Connection conectarBD() throws SQLException {
-        Connection conn = DriverManager.getConnection(URL, USER, PSWD);
 
-        conn.setAutoCommit(true); // Por defecto
-        return conn;
+    public Connection conectarBD() throws SQLException {
+        // NO usar variable local
+        return DriverManager.getConnection(URL, USER, PSWD);
     }
-    protected static void desconectarBD() throws Exception
-    {
-        try {
-            if (conn != null)
-            {
-                conn.close();
-                System.out.println("Desconexion Exitosa!");
-            }
-        } catch (Exception e) {
-            throw e;
+
+    protected static void desconectarBD(Connection conn) throws Exception {
+        if (conn != null && !conn.isClosed()) {
+            conn.close();
         }
     }
+
     protected static String sha256(String original) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -53,3 +45,4 @@ public abstract class MySQLDataHelper{
         }
     }
 }
+

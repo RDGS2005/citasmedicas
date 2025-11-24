@@ -46,19 +46,20 @@ public class citasCompletadasItemController {
         TurnoDAO tdao = new TurnoDAO();
         DiagnosticoDAO ddao = new DiagnosticoDAO();
         try{
-            DiagnosticoDTO diagnostico = ddao.readByCita(cita.Id_turno);
+            //DiagnosticoDTO diagnostico = ddao.readByCita(cita.Id_cita);
             TurnoDTO turno = tdao.readBy(cita.Id_turno);
 
             lblIdCita.setText("ID Cita: " + cita.Id_cita);
             lblEspecialidad.setText("Especialidad: " + turno.Especialidad);
             lblDoctor.setText("Doctor: " + turno.Nombre_medico);
             lblFecha.setText("Fecha: " + turno.Fecha.toString());
-            lblSintomas.setText("Sintomas: " + diagnostico.Sintomas);
-            lblTratamiento.setText("Recomendaciones: " + diagnostico.Tratamiento);
+            lblSintomas.setText("Sintomas: " + "SINTOMAS GENERICOS");
+            lblMedicina.setText("Medicina: " + "MEDICINAS GENERICOS");
+            lblTratamiento.setText("Recomendaciones: " + "RECOMENDACIONES GENERICAS");
 
         } catch (Exception e) {
             Alert mensajeError = manageAlert.error("ERROR AL CARGAR DATOS", "ERROR AL CARGAR DATOS",
-                    "Intentelo de nuevo. Error: " + e.getMessage());
+                    "Intentelo de nuevo. Error en citasCompletadasItem" );
             mensajeError.showAndWait();
             e.printStackTrace(); // Para debugging
         }

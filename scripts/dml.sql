@@ -249,7 +249,7 @@ INSERT INTO TURNO (ID_FECHA, ID_HORARIO, ID_MEDICO) VALUES
 (4, 4, 5), (4, 5, 5), (4, 6, 5), (4, 7, 5), (4, 8, 5), (4, 9, 5), (4, 10, 5), (4, 11, 5), (4, 12, 5), (4, 13, 5), (4, 14, 5), (4, 15, 5), (4, 16, 5), (4, 17, 5), (4, 18, 5), (4, 19, 5), (4, 20, 5), (4, 21, 5), (4, 22, 5), (4, 23, 5),
 (5, 4, 5), (5, 5, 5), (5, 6, 5), (5, 7, 5), (5, 8, 5), (5, 9, 5), (5, 10, 5), (5, 11, 5), (5, 12, 5), (5, 13, 5), (5, 14, 5), (5, 15, 5), (5, 16, 5), (5, 17, 5), (5, 18, 5), (5, 19, 5), (5, 20, 5), (5, 21, 5), (5, 22, 5), (5, 23, 5);
 
-            INSERT INTO CITA (ID_TURNO, REFERENCIA, CONTRARREFERENCIA, ID_PACIENTE, CANCELADA, ATENDIDA) VALUES
+INSERT INTO CITA (ID_TURNO, REFERENCIA, CONTRARREFERENCIA, ID_PACIENTE, CANCELADA, ATENDIDA) VALUES
 -- Citas atendidas (con historial completo)
 (1, NULL, NULL, 1, FALSE, TRUE),   -- Cita completada
 (2, NULL, NULL, 2, FALSE, TRUE),   -- Cita completada

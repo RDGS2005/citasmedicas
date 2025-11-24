@@ -47,7 +47,7 @@ public class historialMedicoController implements Initializable {
 
         } catch (Exception e) {
             Alert mensajeError = manageAlert.error("ERROR AL CARGAR DATOS", "ERROR AL CARGAR DATOS",
-                    "Intentelo de nuevo. Error: " + e.getMessage());
+                    "Intentelo de nuevo. Error: en consultarCitas " + e.getMessage());
             mensajeError.showAndWait();
             e.printStackTrace(); // Para debugging
         }
@@ -69,6 +69,7 @@ public class historialMedicoController implements Initializable {
                 contenedorCitas.getChildren().add(separator);
 
             } catch (IOException e) {
+                System.out.println("error en cargar cita");
                 e.printStackTrace();
             }
         }

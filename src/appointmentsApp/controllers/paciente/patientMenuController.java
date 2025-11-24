@@ -135,7 +135,7 @@ public class patientMenuController implements Initializable {
     void consultarHistorial(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/paciente/verHistorialMedico.fxml"));
         Parent root = loader.load();
-        revisarDiagnosticosController controller = loader.getController();
+        historialMedicoController controller = loader.getController();
         controller.setIdPaciente(idPaciente);
         generalController.openNewWindow(event, root,"Ver Historial Medico");
 
