@@ -1,0 +1,35 @@
+
+.boton{
+    -fx-background-color: #F5F5DC;
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-width: 1.5px;
+}
+
+.boton:hover{
+    -fx-background-color: #FFFDD0;
+    -fx-cursor: hand;
+}
+.cajaBlanca{
+    -fx-background-color: #FAFAFA;
+}
+.fondo{
+    -fx-background-image: url(../resources/fondo.jpg);
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+.imagenPersona{
+    -fx-background-image: url(../resources/loginImagen.png);
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+.imagenIess{
+    -fx-background-image: url(../resources/IessLogo.png);
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+.textFiel{
+    -fx-color: black;
+}

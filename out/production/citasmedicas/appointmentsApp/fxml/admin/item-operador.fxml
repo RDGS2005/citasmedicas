@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- ESTE ITEM SE USA PARA REPRESENTAR LAS CITAS PENDIENTES DEL USUARIO PARA REAGENDARLAS -->
+
+<HBox prefHeight="187.0" prefWidth="444.0" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appointmentsApp.controllers.admin.itemOperadorController">
+
+    <children>
+
+        <!-- Columna con la información de la cita -->
+        <VBox fx:id="infoBox" prefHeight="157.0" prefWidth="277.0" spacing="5">
+            <children>
+                <HBox prefHeight="14.0" prefWidth="239.0">
+                    <children>
+                        <Label fx:id="lblIdOperador" text="ID OPERADOR:">
+                            <HBox.margin>
+                                <Insets right="25.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblIdResult" text="Aqui va el ID" />
+                    </children>
+                </HBox>
+                <Label fx:id="lblCedula" text="Cedula:" />
+                <Label fx:id="lblNombres" text="Nombres:" />
+                <Label fx:id="lblApellidos" text="Apellidos:" />
+                <Label fx:id="lblCorreo" text="Correo:" />
+                <Label fx:id="lblTelefono" text="Telefono:" />
+            </children>
+        </VBox>
+
+        <!-- Columna con los botones -->
+        <VBox fx:id="buttonBox" alignment="CENTER_RIGHT" spacing="10">
+            <children>
+
+                <Button fx:id="btnEliminar" onAction="#eliminarOperador" prefWidth="120" text="Eliminar" />
+                <Button fx:id="btnModificar" onAction="#modificarInformacionOperador" prefWidth="120" text="Modificar" />
+
+            </children>
+        </VBox>
+
+    </children>
+
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15" />
+    </padding>
+
+</HBox>

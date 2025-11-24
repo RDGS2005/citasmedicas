@@ -58,6 +58,7 @@ public class revisarDiagnosticosController implements Initializable {
     private void cargarCitas(List<CitaDTO> citas){
         contenedorCitas.getChildren().clear();
         for(CitaDTO c: citas){
+            System.out.println("Cita encontrada");
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/citas/item_cita2.fxml"));
                 Node item = loader.load();
