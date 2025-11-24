@@ -1,25 +1,22 @@
+
 package appointmentsApp.controllers.citas;
 
 import appointmentsApp.controllers.Cita;
-import appointmentsApp.controllers.manageAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class citasPendientesPacienteItemController {
+public class citasPendientesMedicoOperadorItemController {
 
-    public Label lblIdResult;
     @FXML
     private Button btnCancelar;
 
@@ -27,9 +24,13 @@ public class citasPendientesPacienteItemController {
     private Button btnReagendar;
 
     @FXML
-    private VBox infoBox;
-    @FXML
     private VBox buttonBox;
+
+    @FXML
+    private VBox infoBox;
+
+    @FXML
+    private Label lblApellidoPaciente;
 
     @FXML
     private Label lblDoctor;
@@ -47,25 +48,22 @@ public class citasPendientesPacienteItemController {
     private Label lblIdCita;
 
     @FXML
+    private Label lblIdResult;
+
+    @FXML
+    private Label lblNombrePaciente;
+
+    @FXML
     void cancelarCita(ActionEvent event) {
-        Alert information = manageAlert.confirmation("Confirmacion","Eliminacion de Cita","Desea eliminar la cita seleccionada?");
-
-        if(information.showAndWait().get()== ButtonType.OK){
-            Alert alert = manageAlert.information("Cita eliminada", "Exito en la cancelacion de la cita", "La cita fue eliminada del sistema, puede volver a agendar una cita en cualquuier momento");
-            alert.showAndWait();
-            infoBox.getChildren().clear();
-            buttonBox.getChildren().clear();
-
-        }
 
     }
-    //CARGO LA INFORMACION DE LA CITA Y PONGO EN LOS COMBO BOX
+
     @FXML
     void reagendarCita(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/citas/agendarCita.fxml"));
         Parent root = loader.load();
         //PRIMERO ELIMINO LAS OPCIONES QUE ESTEN
-        agendarCitaController controller = loader.getController();
+        agendarCitaOperadorMedicoController controller = loader.getController();
         controller.getDoctor().getItems().clear();
         controller.getEspecialidad().getItems().clear();
         /*REALIZAO LA CONSULTA Y COMPARO*/
@@ -95,20 +93,15 @@ public class citasPendientesPacienteItemController {
 
     }
 
-
     public void setData (Cita cita){
         lblIdResult.setText(Integer.toString(cita.getIdCita()));
         lblEspecialidad.setText("Especialidad: " + cita.getEspecialidad());
         lblDoctor.setText("Doctor: " + cita.getDoctor());
+        lblNombrePaciente.setText("Nombre Paciente: " + cita.getDoctor());
+        lblApellidoPaciente.setText("Apellidos Paciente: " + cita.getDoctor());
         lblFecha.setText("Fecha: " + cita.getFecha());
         lblHora.setText("Hora: " + cita.getHora());
     }
 
-
 }
-
-
-
-
-
 

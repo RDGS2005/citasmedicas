@@ -1,7 +1,7 @@
 package appointmentsApp.controllers.medico;
 
 import appointmentsApp.controllers.Cita;
-import appointmentsApp.controllers.citas.citasPendientesMedicoItemController;
+import appointmentsApp.controllers.citas.citasPendientesMedicoOperadorItemController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,7 +42,7 @@ public class verPendientesController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointmentsApp/fxml/citas/item_cita3.fxml"));
                 Node item = loader.load();
 
-                citasPendientesMedicoItemController controller = loader.getController();
+                citasPendientesMedicoOperadorItemController controller = loader.getController();
                 controller.setData(c);
                 contenedorCitas.getChildren().add(item);
 

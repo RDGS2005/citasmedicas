@@ -27,5 +27,6 @@ public class item2PacienteController {
     @FXML
     private Label lblTelefono;
 
+
 }
 
